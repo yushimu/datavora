@@ -3,10 +3,6 @@ import { Link } from "react-router-dom";
 import * as LucideIcons from "lucide-react";
 import { ChevronDown, ArrowRight, CheckCircle2, LineChart } from "lucide-react";
 
-import dashboardMockup from "../assets/images/dashboard_mockup_1787411722000.jpg";
-import spreadsheetMockup from "../assets/images/spreadsheet_mockup_1787411737597.jpg";
-import kanbanMockup from "../assets/images/kanban_mockup_1787411757979.jpg";
-
 export function Services() {
   const [formData, setFormData] = useState({
     name: "",
@@ -173,21 +169,21 @@ export function Services() {
                   {/* Slide 0: Analytics Dashboard */}
                   <div className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${activeSlide === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
                     <div className="w-full h-full rounded-[20px] shadow-[0_20px_50px_rgb(0,0,0,0.06)] overflow-hidden">
-                      <img src={dashboardMockup} alt="Analytics Dashboard Mockup" className="w-full h-full object-cover" />
+                      <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80" alt="Analytics Dashboard" className="w-full h-full object-cover" />
                     </div>
                   </div>
 
                   {/* Slide 1: Smart Spreadsheet */}
                   <div className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${activeSlide === 1 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
                     <div className="w-full h-full rounded-[20px] shadow-[0_20px_50px_rgb(0,0,0,0.06)] overflow-hidden">
-                      <img src={spreadsheetMockup} alt="Smart Spreadsheet Mockup" className="w-full h-full object-cover" />
+                      <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80" alt="Smart Spreadsheet" className="w-full h-full object-cover" />
                     </div>
                   </div>
 
                   {/* Slide 2: Kanban CRM */}
                   <div className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${activeSlide === 2 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
                     <div className="w-full h-full rounded-[20px] shadow-[0_20px_50px_rgb(0,0,0,0.06)] overflow-hidden">
-                      <img src={kanbanMockup} alt="Kanban CRM Mockup" className="w-full h-full object-cover" />
+                      <img src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=800&q=80" alt="Kanban CRM" className="w-full h-full object-cover" />
                     </div>
                   </div>
                 </>
@@ -277,7 +273,7 @@ export function Services() {
         <div className="flex flex-col lg:flex-row items-center gap-16">
           <div className="flex-1 w-full order-2 lg:order-1">
             <div className="w-full aspect-square md:aspect-[4/3] bg-gray-50 rounded-[20px] border border-gray-200 shadow-sm relative overflow-hidden flex items-center justify-center p-6 md:p-8">
-              <img src={dashboardMockup} alt="Premium Dashboard Framework" className="w-full h-full object-cover rounded-[16px] shadow-lg shadow-black/5" />
+              <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80" alt="Premium Dashboard Framework" className="w-full h-full object-cover rounded-[16px] shadow-lg shadow-black/5" />
             </div>
           </div>
           
