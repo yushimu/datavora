@@ -5,12 +5,12 @@ import { Download, Star, Check, ChevronLeft, ChevronRight } from "lucide-react";
 type Product = {
   id: number;
   title: string;
+  categories: string[];
   description: string;
   price: string;
   features: string[];
   image: string;
-  images?: string[];
-  category?: string;
+  images: string[];
 };
 
 const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
@@ -115,17 +115,18 @@ export function Products() {
   const defaultProducts = [
     {
       id: 1,
-      title: "Ultimate Financial Tracker",
-      category: "Tracker",
-      description: "A comprehensive dashboard for managing personal finances, tracking investments, and planning budgets with beautiful automated charts.",
-      price: "$49",
+      title: "FinDash Pro",
+      categories: ["Dashboard", "Tracker"],
+      description: "Automated financial dashboard for SaaS startups. Track MRR, Churn, and LTV automatically.",
+      price: "$149",
+      features: ["Automated Stripe Integration", "P&L Statement Generator", "Cash Flow Forecasting", "One-click PDF Export"],
       image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
-      features: ["Automated expense categorization", "Investment portfolio tracking", "Debt payoff calculator", "Monthly summary dashboards"]
+      images: [],
     },
     {
       id: 2,
       title: "Agency Project Manager",
-      category: "Dashboard",
+      categories: ["Dashboard"],
       description: "Keep your team aligned with this advanced project tracking system. Includes Gantt charts, resource allocation, and client portals.",
       price: "$79",
       image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
@@ -140,7 +141,7 @@ export function Products() {
   const priceRanges = ["All Prices", "Under $50", "$50 - $100", "Above $100"];
 
   const filteredProducts = displayProducts.filter(p => {
-    const catMatch = selectedCategory === "All" || p.category === selectedCategory;
+    const catMatch = selectedCategory === "All" || (p.categories && p.categories.includes(selectedCategory));
     
     let priceMatch = true;
     const numPrice = parseFloat(p.price.replace(/[^0-9.]/g, ''));

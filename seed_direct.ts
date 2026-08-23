@@ -12,7 +12,7 @@ const productCategories = pgTable("product_categories", {
 const products = pgTable("products", {
   id: serial("id").primaryKey(),
   title: varchar("title", { length: 255 }).notNull(),
-  category: varchar("category", { length: 255 }).default('Uncategorized'),
+  categories: jsonb("categories").$type<string[]>().default([]),
   description: text("description").notNull(),
   price: varchar("price", { length: 50 }).notNull(),
   features: jsonb("features").notNull().$type<string[]>(),
@@ -40,51 +40,55 @@ const pool = new Pool({
 
 const db = drizzle(pool);
 
-const initialProducts = [
-  {
-    title: "FinDash Pro",
-    description: "Automated financial dashboard for SaaS startups. Track MRR, Churn, and LTV automatically.",
-    price: "$149",
-    features: [
-      "Automated Stripe Integration",
-      "P&L Statement Generator",
-      "Cash Flow Forecasting",
-      "One-click PDF Export"
-    ]
-  },
-  {
-    title: "Inventory Master",
-    description: "Complex inventory tracking with automated reorder alerts and supplier management.",
-    price: "$89",
-    features: [
-      "Barcode Scanner Compatible",
-      "Low Stock Email Alerts",
-      "Supplier Database",
-      "Historical Trends"
-    ]
-  },
-  {
-    title: "HR Ops Hub",
-    description: "Complete employee lifecycle management, from onboarding to performance reviews.",
-    price: "$129",
-    features: [
-      "Onboarding Checklists",
-      "Time-off Tracker",
-      "Performance Review Templates",
-      "Salary Band Calculator"
-    ]
-  }
-];
-
 async function run() {
   try {
-    const existingProducts = await db.select().from(products);
-    if (existingProducts.length === 0) {
-      for (const p of initialProducts) {
-        await db.insert(products).values(p);
-      }
-      console.log("Seeded products");
+    // Alter table manually because drizzle-kit push prompts
+    try {
+      await pool.query('ALTER TABLE products DROP COLUMN IF EXISTS category CASCADE;');
+      await pool.query('ALTER TABLE products ADD COLUMN IF NOT EXISTS categories JSONB DEFAULT \'[]\';');
+      console.log("Altered products table");
+    } catch (e) {
+      console.log("Alter table warning:", e);
     }
+    
+    // Clear existing products and reseed
+    await db.delete(products);
+    console.log("Cleared existing products");
+
+    const initialProducts = [
+      {
+        title: "Inventory Master Pro",
+        categories: ["Dashboard", "Web App"],
+        description: "Complex inventory tracking with automated reorder alerts and supplier management dashboard. Built for medium to large retail operations.",
+        price: "$89",
+        features: ["Real-time Tracking", "Supplier API", "Analytics", "Role-based Access"],
+        image: "",
+        images: ["https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80"],
+      },
+      {
+        title: "Finance Tracker Ultimate",
+        categories: ["Tracker", "Dashboard", "Template"],
+        description: "Comprehensive financial dashboard template with predictive budgeting and cash flow analysis. Connects directly to major bank APIs.",
+        price: "$129",
+        features: ["Bank Sync", "Predictive AI", "Tax Export", "Multi-currency"],
+        image: "",
+        images: ["https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80", "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80"],
+      },
+      {
+        title: "Data Model Architecture v2",
+        categories: ["Data Model"],
+        description: "Enterprise-grade data model schemas for E-commerce platforms. Includes ERD diagrams, SQL scripts, and migration guides.",
+        price: "$149",
+        features: ["PostgreSQL Ready", "Normalized", "Documentation", "Migration Scripts"],
+        image: "",
+        images: ["https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=80"],
+      }
+    ];
+
+    for (const prod of initialProducts) {
+      await db.insert(products).values(prod);
+    }
+    console.log("Seeded products with multiple categories");
 
     const portfolioDataStr = fs.readFileSync("./src/data/portfolio.json", "utf8");
     const portfolioData = JSON.parse(portfolioDataStr);

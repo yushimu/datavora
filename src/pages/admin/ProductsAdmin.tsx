@@ -2,22 +2,22 @@ import React, { useState, useEffect, useRef } from "react";
 import { Plus, Edit2, Trash2, X, Upload } from "lucide-react";
 import { compressImage } from "../../lib/imageUtils";
 
-type Product = {
+export type Product = {
   id: number;
   title: string;
+  categories: string[];
   description: string;
   price: string;
   features: string[];
   image: string;
   images: string[];
-  category: string;
 };
 
 export function ProductsAdmin() {
   const [products, setProducts] = useState<Product[]>([]);
   const [isEditing, setIsEditing] = useState<Product | null>(null);
   const [isAdding, setIsAdding] = useState(false);
-  const [formData, setFormData] = useState<Partial<Product>>({ features: [], images: [] });
+  const [formData, setFormData] = useState<Partial<Product>>({ features: [], images: [], categories: [] });
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [categories, setCategories] = useState<{id: number; name: string}[]>([]);
@@ -61,8 +61,18 @@ export function ProductsAdmin() {
 
     setIsEditing(null);
     setIsAdding(false);
-    setFormData({ features: [], images: [] });
+    setFormData({ features: [], images: [], categories: [] });
     fetchProducts();
+  };
+
+  const handleEdit = (p: Product) => {
+    setFormData({ ...p, categories: p.categories || [] });
+    setIsEditing(p);
+  };
+
+  const handleAddNew = () => {
+    setFormData({ features: [], images: [], categories: [] });
+    setIsAdding(true);
   };
 
   const handleDelete = async (id: number) => {
@@ -119,13 +129,30 @@ export function ProductsAdmin() {
             </div>
           </div>
           <div>
-            <label className="block text-sm font-bold text-gray-700 mb-2">Category</label>
-            <select className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black" value={formData.category || (categories[0]?.name || "Uncategorized")} onChange={e => setFormData({...formData, category: e.target.value})}>
-              {categories.map(cat => (
-                <option key={cat.id} value={cat.name}>{cat.name}</option>
-              ))}
-              {categories.length === 0 && <option value="Uncategorized">Uncategorized</option>}
-            </select>
+            <label className="block text-sm font-bold text-gray-700 mb-2">Categories</label>
+            <div className="flex flex-wrap gap-2 mb-2">
+              {categories.map(cat => {
+                const isSelected = formData.categories?.includes(cat.name);
+                return (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    onClick={() => {
+                      const current = formData.categories || [];
+                      if (isSelected) {
+                        setFormData({...formData, categories: current.filter(c => c !== cat.name)});
+                      } else {
+                        setFormData({...formData, categories: [...current, cat.name]});
+                      }
+                    }}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition-colors ${isSelected ? 'bg-primary text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+                  >
+                    {cat.name}
+                  </button>
+                )
+              })}
+              {categories.length === 0 && <span className="text-sm text-gray-500">No categories found. Please add in Settings.</span>}
+            </div>
           </div>
           <div>
             <label className="block text-sm font-bold text-gray-700 mb-2">Images</label>
@@ -189,7 +216,7 @@ export function ProductsAdmin() {
           <h1 className="text-3xl font-bold text-black mb-2">Products Manager</h1>
           <p className="text-gray-500">Manage your product offerings and pricing.</p>
         </div>
-        <button onClick={() => { setIsAdding(true); setFormData({ features: [], image: "" }); }} className="bg-primary text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-primary-hover shadow-lg shadow-primary/20 transition-all">
+        <button onClick={handleAddNew} className="bg-primary text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-primary-hover shadow-lg shadow-primary/20 transition-all">
           <Plus className="w-5 h-5" /> Add Product
         </button>
       </div>
@@ -204,8 +231,12 @@ export function ProductsAdmin() {
             )}
             <div className="flex-1 flex flex-col justify-between">
               <div>
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="text-[10px] uppercase font-bold tracking-wider bg-primary/10 text-primary px-2 py-0.5 rounded-full">{p.category || 'Uncategorized'}</span>
+                <div className="flex flex-wrap gap-2 mb-1">
+                  {(p.categories && p.categories.length > 0) ? p.categories.map(cat => (
+                    <span key={cat} className="text-[10px] uppercase font-bold tracking-wider bg-primary/10 text-primary px-2 py-0.5 rounded-full">{cat}</span>
+                  )) : (
+                    <span className="text-[10px] uppercase font-bold tracking-wider bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">Uncategorized</span>
+                  )}
                 </div>
                 <h3 className="text-xl font-bold mb-1 text-black">{p.title}</h3>
                 <p className="text-gray-500 text-sm line-clamp-2 mb-2">{p.description}</p>

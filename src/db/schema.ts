@@ -9,7 +9,7 @@ export const admins = pgTable("admins", {
 export const products = pgTable("products", {
   id: serial("id").primaryKey(),
   title: varchar("title", { length: 255 }).notNull(),
-  category: varchar("category", { length: 255 }).default('Uncategorized'),
+  categories: jsonb("categories").$type<string[]>().default([]),
   description: text("description").notNull(),
   price: varchar("price", { length: 50 }).notNull(),
   features: jsonb("features").notNull().$type<string[]>(),
