@@ -131,37 +131,12 @@ export function Portfolio() {
               <div className="w-full aspect-[16/10] bg-black rounded-t-[16px] md:rounded-t-[20px] border-[6px] md:border-[8px] border-black relative overflow-hidden flex flex-col">
                 <div className="absolute top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 md:w-2 md:h-2 bg-gray-800 rounded-full"></div>
                 {/* Screen Content - Executive Dashboard */}
-                <div className="flex-1 bg-white m-1 mt-3 md:mt-4 rounded-sm flex flex-col p-2 md:p-3 overflow-hidden">
-                  <div className="flex justify-between items-center mb-3 md:mb-4 border-b border-gray-100 pb-2">
-                    <div className="h-2 md:h-3 w-16 md:w-24 bg-gray-200 rounded-full"></div>
-                    <div className="flex gap-1.5 md:gap-2">
-                      <div className="h-2 md:h-3 w-6 md:w-8 bg-primary/20 rounded-full"></div>
-                      <div className="h-2 md:h-3 w-6 md:w-8 bg-gray-100 rounded-full"></div>
-                    </div>
-                  </div>
-                  <div className="flex gap-2 md:gap-3 mb-2 md:mb-3">
-                    {[1, 2, 3].map((i) => (
-                      <div key={i} className="flex-1 h-10 md:h-12 bg-primary/5 rounded-md border border-primary/10 p-1.5 md:p-2 flex flex-col justify-between">
-                        <div className="h-1 md:h-1.5 w-6 md:w-8 bg-primary/30 rounded-full"></div>
-                        <div className="h-2 md:h-3 w-8 md:w-12 bg-primary/60 rounded-full"></div>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="flex-1 flex gap-2 md:gap-3">
-                    <div className="flex-[2] border border-gray-100 rounded-md p-1.5 md:p-2 flex flex-col justify-end gap-1">
-                      <div className="flex items-end gap-1 h-full pt-2 md:pt-4">
-                        {[30, 50, 40, 70, 60, 90, 80].map((h, i) => (
-                          <div key={i} className="flex-1 bg-primary/30 rounded-t-sm" style={{ height: `${h}%` }}></div>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="flex-[1] border border-gray-100 rounded-md p-1.5 md:p-2 flex flex-col gap-1.5 md:gap-2">
-                       <div className="h-1.5 md:h-2 w-8 md:w-10 bg-gray-200 rounded-full mb-0.5 md:mb-1"></div>
-                       {[1, 2, 3].map((i) => (
-                         <div key={i} className="h-2 md:h-3 w-full bg-gray-50 rounded-sm"></div>
-                       ))}
-                    </div>
-                  </div>
+                <div className="flex-1 bg-black m-1 mt-3 md:mt-4 rounded-sm flex overflow-hidden">
+                  <img 
+                    src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80" 
+                    alt="Real Dashboard" 
+                    className="w-full h-full object-cover" 
+                  />
                 </div>
               </div>
               <div className="w-full h-3 md:h-4 bg-gray-300 rounded-b-[16px] md:rounded-b-[20px] relative shadow-xl">
