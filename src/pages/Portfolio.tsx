@@ -115,23 +115,23 @@ export function Portfolio() {
               Portfolio
             </div>
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-black mb-6 leading-tight">
-              Real Data Projects That Solve Real Business Problems
+              {t.portfolio.heroTitle}
             </h1>
             <p className="text-sm md:text-base lg:text-lg text-zinc-500 mb-8 md:mb-10 leading-relaxed max-w-xl mx-auto lg:mx-0">
-              Explore dashboards, automation systems, financial reports, and custom web apps built for modern businesses.
+              {t.portfolio.heroDesc}
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4">
               <a
                 href="#projects"
                 className="w-full sm:w-auto px-6 md:px-8 min-h-[44px] py-3 flex items-center justify-center bg-primary text-white rounded-xl md:rounded-[20px] font-bold shadow-lg shadow-primary/20 hover:-translate-y-1 hover:shadow-xl hover:bg-[#059669] transition-all duration-300 text-center text-sm md:text-base"
               >
-                View Projects
+                {t.portfolio.viewProjects}
               </a>
               <Link
                 to="/services"
                 className="w-full sm:w-auto px-6 md:px-8 min-h-[44px] py-3 flex items-center justify-center bg-white border border-gray-200 text-black rounded-xl md:rounded-[20px] font-bold hover:bg-gray-50 hover:-translate-y-1 transition-all duration-300 text-center gap-2 text-sm md:text-base"
               >
-                Request Yours
+                {t.portfolio.requestYours}
                 <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
               </Link>
             </div>
@@ -164,10 +164,10 @@ export function Portfolio() {
         <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20">
           <div className="text-center max-w-2xl mx-auto mb-10 md:mb-16">
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-black mb-3 md:mb-4">
-              Featured Projects
+              {t.portfolio.featuredTitle}
             </h2>
             <p className="text-zinc-500 text-sm md:text-base lg:text-lg px-4 md:px-0">
-              A curated selection of our finest custom data solutions.
+              {t.portfolio.featuredDesc}
             </p>
           </div>
 
@@ -220,7 +220,7 @@ export function Portfolio() {
                     onClick={() => setSelectedProject(project)}
                     className="w-full min-h-[32px] sm:min-h-[40px] md:min-h-[44px] flex items-center justify-center py-1.5 sm:py-2.5 md:py-3 bg-white border border-gray-200 text-black rounded-lg sm:rounded-xl md:rounded-[12px] font-bold text-[10px] sm:text-xs md:text-sm hover:bg-black hover:text-white hover:border-black transition-colors duration-300"
                   >
-                    View Detail
+                    {t.portfolio.viewDetail}
                   </button>
                 </div>
               </div>
@@ -415,7 +415,7 @@ export function Portfolio() {
                             {language === 'en' && selectedProject.category_en ? selectedProject.category_en : selectedProject.category}
                           </div>
                           <div className="text-xl font-bold text-black opacity-30">
-                            {language === 'en' && selectedProject.title_en ? selectedProject.title_en : selectedProject.title} Snapshot
+                            {language === 'en' && selectedProject.title_en ? selectedProject.title_en : selectedProject.title} {t.portfolio.snapshot}
                           </div>
                         </div>
                       </div>

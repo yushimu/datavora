@@ -112,6 +112,56 @@ export function ProductsAdmin() {
     }));
   };
 
+  return (
+    <div className="w-full">
+      <div className="flex justify-between items-center mb-8">
+        <div>
+          <h1 className="text-3xl font-bold text-black mb-2">Products Manager</h1>
+          <p className="text-gray-500">Manage your product offerings and pricing.</p>
+        </div>
+        <button onClick={handleAddNew} className="bg-primary text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-primary-hover shadow-lg shadow-primary/20 transition-all">
+          <Plus className="w-5 h-5" /> Add Product
+        </button>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {products.map(p => (
+          <div key={p.id} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex gap-6">
+            {((p.images && p.images.length > 0) ? p.images[0] : p.image) && (
+              <div className="w-32 h-32 shrink-0 rounded-xl overflow-hidden bg-gray-100">
+                <img src={(p.images && p.images.length > 0) ? p.images[0] : p.image} alt={p.title} className="w-full h-full object-cover" />
+              </div>
+            )}
+            <div className="flex-1 flex flex-col justify-between">
+              <div>
+                <div className="flex flex-wrap gap-2 mb-1">
+                  {(p.categories && p.categories.length > 0) ? p.categories.map(cat => (
+                    <span key={cat} className="text-[10px] uppercase font-bold tracking-wider bg-primary/10 text-primary px-2 py-0.5 rounded-full">{cat}</span>
+                  )) : (
+                    <span className="text-[10px] uppercase font-bold tracking-wider bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">Uncategorized</span>
+                  )}
+                </div>
+                <h3 className="text-xl font-bold mb-1 text-black">{p.title}</h3>
+                <p className="text-gray-500 text-sm line-clamp-2 mb-2">{p.description}</p>
+                <div className="flex flex-wrap gap-1">
+                  {(p.features || []).slice(0,2).map((f, i) => (
+                    <span key={i} className="text-[10px] uppercase font-bold tracking-wider bg-gray-100 text-gray-500 px-2 py-1 rounded-md">{f}</span>
+                  ))}
+                  {p.features && p.features.length > 2 && <span className="text-[10px] uppercase font-bold tracking-wider bg-gray-100 text-gray-500 px-2 py-1 rounded-md">+{p.features.length - 2}</span>}
+                </div>
+              </div>
+              <div className="flex justify-between items-center mt-4 pt-4 border-t border-gray-50">
+                <span className="font-bold text-primary text-lg">{p.price}</span>
+                <div className="flex gap-2">
+                  <button onClick={() => handleEdit(p)} className="w-10 h-10 flex items-center justify-center text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-full transition-colors"><Edit2 className="w-4 h-4" /></button>
+                  <button onClick={() => handleDelete(p.id)} className="w-10 h-10 flex items-center justify-center text-red-600 bg-red-50 hover:bg-red-100 rounded-full transition-colors"><Trash2 className="w-4 h-4" /></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
       {(isAdding || isEditing) && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-3xl p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto custom-scrollbar">

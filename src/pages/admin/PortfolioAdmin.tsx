@@ -98,6 +98,41 @@ export function PortfolioAdmin() {
     }));
   };
 
+  return (
+    <div className="w-full">
+      <div className="flex justify-between items-center mb-8">
+        <div>
+          <h1 className="text-3xl font-bold text-black mb-2">Portfolio Manager</h1>
+          <p className="text-gray-500">Manage your past projects and case studies.</p>
+        </div>
+        <button onClick={() => { setIsAdding(true); setFormData({ features: [], tools: [], image: "" }); }} className="bg-primary hover:bg-primary-hover text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 shadow-lg shadow-primary/20 transition-all">
+          <Plus className="w-5 h-5" /> Add Project
+        </button>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {items.map(p => (
+          <div key={p.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow overflow-hidden flex flex-col">
+            {((p.images && p.images.length > 0) ? p.images[0] : p.image) && (
+              <div className="w-full h-48 bg-gray-100 overflow-hidden">
+                <img src={(p.images && p.images.length > 0) ? p.images[0] : p.image} alt={p.title} className="w-full h-full object-cover" />
+              </div>
+            )}
+            <div className="p-6 flex-1 flex flex-col">
+              <div className="inline-block px-3 py-1 bg-gray-100 text-gray-800 text-xs font-bold rounded-full mb-3 self-start">{p.category}</div>
+              <h3 className="text-xl font-bold mb-2 text-black">{p.title}</h3>
+              <p className="text-gray-500 text-sm line-clamp-2 mb-4 flex-1">{p.description}</p>
+              <div className="flex justify-end items-center mt-4 pt-4 border-t border-gray-50">
+                <div className="flex gap-2">
+                  <button onClick={() => { setIsEditing(p); setFormData(p); }} className="w-10 h-10 flex items-center justify-center text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-full transition-colors"><Edit2 className="w-4 h-4" /></button>
+                  <button onClick={() => handleDelete(p.id)} className="w-10 h-10 flex items-center justify-center text-red-600 bg-red-50 hover:bg-red-100 rounded-full transition-colors"><Trash2 className="w-4 h-4" /></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
       {(isAdding || isEditing) && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-3xl p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto custom-scrollbar">

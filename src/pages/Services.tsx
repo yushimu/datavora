@@ -138,23 +138,23 @@ export function Services() {
               {t.services.title}
             </div>
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-black mb-6 leading-tight">
-              Need a Data Solution Built Just for Your Business?
+              {t.services.heroTitle}
             </h1>
             <p className="text-sm md:text-base lg:text-lg text-zinc-500 mb-8 md:mb-10 leading-relaxed max-w-xl mx-auto lg:mx-0 px-4 md:px-0">
-              {t.services.desc}
+              {t.services.heroDesc}
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4 px-4 sm:px-0">
               <a
                 href="#request-form"
                 className="w-full sm:w-auto px-6 md:px-8 min-h-[44px] py-3 flex items-center justify-center bg-primary text-white rounded-xl md:rounded-[20px] font-bold shadow-lg shadow-primary/20 hover:-translate-y-1 hover:shadow-xl hover:bg-[#059669] transition-all duration-300 text-center text-sm md:text-base"
               >
-                Request Now
+                {t.services.requestNow}
               </a>
               <Link
                 to="/portfolio"
                 className="w-full sm:w-auto px-6 md:px-8 min-h-[44px] py-3 flex items-center justify-center bg-white border border-gray-200 text-black rounded-xl md:rounded-[20px] font-bold hover:bg-gray-50 hover:-translate-y-1 transition-all duration-300 text-center gap-2 text-sm md:text-base"
               >
-                View Portfolio
+                {t.services.viewPortfolio}
                 <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
               </Link>
             </div>
@@ -217,10 +217,10 @@ export function Services() {
       <section className="w-full max-w-[1600px] mx-auto px-5 md:px-12 lg:px-20 py-20">
         <div className="text-center max-w-2xl mx-auto mb-16">
           <h2 className="text-[24px] md:text-[28px] lg:text-[36px] font-bold tracking-tight text-black mb-4">
-            Purpose-Built Solutions
+            {t.services.purposeTitle}
           </h2>
           <p className="text-zinc-500">
-            We architect precise, scalable data systems tailored to your specific operational needs.
+            {t.services.purposeDesc}
           </p>
         </div>
         
@@ -245,10 +245,10 @@ export function Services() {
         <div className="w-full max-w-[1600px] mx-auto px-5 md:px-12 lg:px-20">
           <div className="text-center max-w-2xl mx-auto mb-20">
             <h2 className="text-[24px] md:text-[28px] lg:text-[36px] font-bold tracking-tight text-black mb-4">
-              How It Works
+              {t.services.howItWorks}
             </h2>
             <p className="text-zinc-500">
-              A streamlined, transparent process from initial consultation to final delivery.
+              {t.services.howItWorksDesc}
             </p>
           </div>
 
@@ -285,10 +285,10 @@ export function Services() {
           
           <div className="flex-1 w-full order-1 lg:order-2">
             <h2 className="text-[24px] md:text-[28px] lg:text-[36px] font-bold tracking-tight text-black mb-6">
-              Built to Enterprise Standards
+              {t.services.builtToScale}
             </h2>
             <p className="text-base lg:text-lg text-zinc-500 mb-10">
-              We don't just build templates; we build scalable data applications. Every project adheres to strict structural and visual guidelines.
+              {t.services.builtDesc}
             </p>
             
             <ul className="space-y-5">
@@ -318,41 +318,41 @@ export function Services() {
           <div className="flex flex-col lg:flex-row gap-16">
             <div className="flex-1 text-white">
               <h2 className="text-[24px] md:text-[28px] lg:text-[36px] font-bold tracking-tight mb-6">
-                Let's Discuss Your Project.
+                {t.services.requestTitle}
               </h2>
               <p className="text-white/60 text-base lg:text-lg mb-10 max-w-md">
-                Fill out the form with your project details, and we'll review your requirements and get back to you with a custom proposal via WhatsApp.
+                {t.services.requestDesc}
               </p>
               <div className="space-y-6">
                 <div className="flex items-center gap-4 text-white/80">
                   <div className="w-12 h-12 rounded-[16px] bg-white/10 flex items-center justify-center">
                     <CheckCircle2 className="w-6 h-6 text-primary" />
                   </div>
-                  <span className="font-medium">Fast Response Time</span>
+                  <span className="font-medium">{t.services.fastResponse}</span>
                 </div>
                 <div className="flex items-center gap-4 text-white/80">
                   <div className="w-12 h-12 rounded-[16px] bg-white/10 flex items-center justify-center">
                     <CheckCircle2 className="w-6 h-6 text-primary" />
                   </div>
-                  <span className="font-medium">Free Initial Consultation</span>
+                  <span className="font-medium">{t.services.freeConsult}</span>
                 </div>
                 <div className="flex items-center gap-4 text-white/80">
                   <div className="w-12 h-12 rounded-[16px] bg-white/10 flex items-center justify-center">
                     <CheckCircle2 className="w-6 h-6 text-primary" />
                   </div>
-                  <span className="font-medium">Secure & Confidential</span>
+                  <span className="font-medium">{t.services.secure}</span>
                 </div>
               </div>
             </div>
             
             <div className="flex-1">
               <div className="bg-white p-8 md:p-10 rounded-[20px] shadow-2xl">
-                <h3 className="text-2xl font-bold text-black mb-8">Request Custom Solution</h3>
+                <h3 className="text-2xl font-bold text-black mb-8">{t.services.formTitle}</h3>
                 <form onSubmit={handleWhatsAppSubmit} className="space-y-6">
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <label className="text-sm font-bold text-black">Full Name</label>
+                      <label className="text-sm font-bold text-black">{t.services.formName}</label>
                       <input 
                         required
                         type="text" 
@@ -363,7 +363,7 @@ export function Services() {
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-sm font-bold text-black">Email Address</label>
+                      <label className="text-sm font-bold text-black">{t.services.formEmail}</label>
                       <input 
                         required
                         type="email" 
@@ -376,7 +376,7 @@ export function Services() {
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-black">WhatsApp Number</label>
+                    <label className="text-sm font-bold text-black">{t.services.formWa}</label>
                     <input 
                       required
                       type="tel" 
@@ -389,7 +389,7 @@ export function Services() {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <label className="text-sm font-bold text-black">Business Type</label>
+                      <label className="text-sm font-bold text-black">{t.services.formBusiness}</label>
                       <select 
                         required
                         value={formData.business}
@@ -406,7 +406,7 @@ export function Services() {
                       </select>
                     </div>
                     <div className="space-y-2">
-                      <label className="text-sm font-bold text-black">Solution Type</label>
+                      <label className="text-sm font-bold text-black">{t.services.formType}</label>
                       <select 
                         required
                         value={formData.type}
@@ -425,7 +425,7 @@ export function Services() {
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-black">Project Description</label>
+                    <label className="text-sm font-bold text-black">{t.services.formDesc}</label>
                     <textarea 
                       required
                       rows={4}
@@ -440,7 +440,7 @@ export function Services() {
                     type="submit"
                     className="w-full min-h-[44px] py-4 flex items-center justify-center bg-primary text-white rounded-[16px] font-bold text-lg hover:bg-[#059669] hover:shadow-lg hover:shadow-primary/20 hover:-translate-y-1 transition-all duration-300"
                   >
-                    Request via WhatsApp
+                    {t.services.formSubmit}
                   </button>
                 </form>
               </div>
@@ -453,9 +453,9 @@ export function Services() {
       <section className="max-w-[800px] mx-auto px-5 py-24">
         <div className="text-center mb-16">
           <h2 className="text-[24px] md:text-[28px] lg:text-[36px] font-bold tracking-tight text-black mb-4">
-            Frequently Asked Questions
+            {t.services.faqTitle}
           </h2>
-          <p className="text-zinc-500">Everything you need to know about our custom data services.</p>
+          <p className="text-zinc-500">{t.services.faqDesc}</p>
         </div>
 
         <div className="space-y-4">
@@ -492,16 +492,16 @@ export function Services() {
           
           <div className="relative z-10">
             <h2 className="text-[24px] md:text-[28px] lg:text-[36px] font-bold text-white mb-6">
-              Let's Build Your Ideal Data Solution
+              {t.services.footerTitle}
             </h2>
             <p className="text-base lg:text-lg text-white/90 mb-10 max-w-2xl mx-auto">
-              Tell us your workflow and we'll transform it into an efficient data solution.
+              {t.services.footerDesc}
             </p>
             <a
               href="#request-form"
               className="inline-flex min-h-[44px] items-center justify-center px-8 py-4 bg-black text-white rounded-[20px] font-bold text-lg hover:bg-zinc-800 hover:-translate-y-1 hover:shadow-xl transition-all duration-300"
             >
-              Start Your Project
+              {t.services.footerBtn}
             </a>
           </div>
         </div>
