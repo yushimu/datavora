@@ -1,7 +1,7 @@
 import { drizzle } from "drizzle-orm/node-postgres";
 import pg from "pg";
 const { Pool } = pg;
-import * as schema from "./schema";
+import * as schema from "./schema.js";
 
 declare global {
   var _postgresPool: pg.Pool | undefined;
@@ -16,8 +16,7 @@ export const createPool = () => {
         connectionString: process.env.DATABASE_URL,
         max: 10,
         connectionTimeoutMillis: 15000,
-        // Optional for remote DB like Supabase
-        ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : undefined
+        ssl: { rejectUnauthorized: false }
       };
     } else {
       // Fallback for local development if needed
