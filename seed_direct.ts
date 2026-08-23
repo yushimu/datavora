@@ -1,7 +1,7 @@
 import { drizzle } from "drizzle-orm/node-postgres";
 import pg from "pg";
 const { Pool } = pg;
-import { pgTable, serial, varchar, text, jsonb } from "drizzle-orm/pg-core";
+import { pgTable, serial, varchar, text, jsonb, integer } from "drizzle-orm/pg-core";
 import fs from "fs";
 
 const productCategories = pgTable("product_categories", {
@@ -31,6 +31,15 @@ const portfolio = pgTable("portfolio", {
   tools: jsonb("tools").notNull().$type<string[]>(),
   image: text("image").default(''),
   images: jsonb("images").$type<string[]>().default([]),
+});
+
+const testimonials = pgTable("testimonials", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  company: varchar("company", { length: 255 }).notNull(),
+  rating: integer("rating").default(5),
+  review: text("review").notNull(),
+  photo: varchar("photo", { length: 255 }).default(''),
 });
 
 const pool = new Pool({
@@ -107,6 +116,58 @@ async function run() {
       await db.insert(productCategories).values({ name: cat }).onConflictDoNothing();
     }
     console.log("Seeded categories");
+
+    const existingTestimonials = await db.select().from(testimonials);
+    if (existingTestimonials.length === 0) {
+      const initialTestimonials = [
+        {
+          name: "Sarah Jenkins",
+          company: "Vertex Inc.",
+          review: "Datavora transformed our chaotic data into a streamlined, beautiful system that saves us hours every week. Their custom data solution was exactly what we needed to scale our processes without adding overhead.",
+          rating: 5,
+          photo: ""
+        },
+        {
+          name: "Marcus Thorne",
+          company: "Lumina Partners",
+          review: "The venture capital deal tracker is an absolute masterpiece. It's not just functional; it's aesthetically pleasing and incredibly intuitive. The team at Datavora understands both finance and design.",
+          rating: 5,
+          photo: ""
+        },
+        {
+          name: "Elena Rodriguez",
+          company: "Echo Marketing",
+          review: "We purchased their Ultimate Financial Tracker and it blew us away. Clean layout, brilliant automation, and it perfectly handles our complex agency revenue streams.",
+          rating: 5,
+          photo: ""
+        },
+        {
+          name: "David Chen",
+          company: "Stratos E-Commerce",
+          review: "Datavora's custom inventory solution paid for itself in the first month by catching stock discrepancies we were previously missing. Exceptional service and a beautiful end product.",
+          rating: 5,
+          photo: ""
+        },
+        {
+          name: "Rachel Kim",
+          company: "Nexus Tech",
+          review: "I've worked with many consultants, but Datavora stands out for their ability to take a messy brief and deliver a polished, high-performance financial model. They are true data architects.",
+          rating: 5,
+          photo: ""
+        },
+        {
+          name: "James Wilson",
+          company: "Oasis Health",
+          review: "The staff scheduling matrix they built for us reduced our scheduling time by 70%. It handles all our compliance rules automatically. A game-changer for our clinic.",
+          rating: 5,
+          photo: ""
+        }
+      ];
+      for (const t of initialTestimonials) {
+        await db.insert(testimonials).values(t);
+      }
+      console.log("Seeded testimonials");
+    }
     
     console.log("Seeding complete!");
   } catch (err) {
