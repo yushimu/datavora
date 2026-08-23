@@ -3,7 +3,7 @@ import path from "path";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { db } from "./src/db/index.js";
-import { admins, products, portfolio, services, testimonials } from "./src/db/schema.js";
+import { admins, products, portfolio, services, testimonials, serviceGallery } from "./src/db/schema.js";
 import { eq } from "drizzle-orm";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -244,7 +244,7 @@ app.delete("/api/testimonials/:id", requireAuth, async (req, res) => {
 // Service Gallery API
 app.get("/api/service-gallery", async (req, res) => {
   try {
-    const allImages = await db.select().from(schema.serviceGallery);
+    const allImages = await db.select().from(serviceGallery);
     res.json(allImages);
   } catch (err) {
     res.status(500).json({ error: "Server error" });
@@ -253,7 +253,7 @@ app.get("/api/service-gallery", async (req, res) => {
 
 app.post("/api/service-gallery", requireAuth, async (req, res) => {
   try {
-    const newItem = await db.insert(schema.serviceGallery).values(req.body).returning();
+    const newItem = await db.insert(serviceGallery).values(req.body).returning();
     res.json(newItem[0]);
   } catch (err) {
     res.status(500).json({ error: "Server error" });
@@ -262,7 +262,7 @@ app.post("/api/service-gallery", requireAuth, async (req, res) => {
 
 app.delete("/api/service-gallery/:id", requireAuth, async (req, res) => {
   try {
-    await db.delete(schema.serviceGallery).where(eq(schema.serviceGallery.id, parseInt(req.params.id as string)));
+    await db.delete(serviceGallery).where(eq(serviceGallery.id, parseInt(req.params.id as string)));
     res.json({ success: true });
   } catch (err) {
     res.status(500).json({ error: "Server error" });
