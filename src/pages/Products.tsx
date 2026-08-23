@@ -62,7 +62,6 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
               )}
             </>
           ) : (
-          ) : (
             <span className="text-zinc-400 text-[10px] sm:text-xs md:text-sm font-medium">{t.products.preview}</span>
           )}
         </div>
