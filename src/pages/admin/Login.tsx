@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Rocket } from "lucide-react";
 
@@ -8,9 +8,30 @@ export function Login() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  // CAPTCHA State
+  const [captchaNum1, setCaptchaNum1] = useState(0);
+  const [captchaNum2, setCaptchaNum2] = useState(0);
+  const [userCaptcha, setUserCaptcha] = useState("");
+
+  const generateCaptcha = () => {
+    setCaptchaNum1(Math.floor(Math.random() * 10) + 1);
+    setCaptchaNum2(Math.floor(Math.random() * 10) + 1);
+    setUserCaptcha("");
+  };
+
+  useEffect(() => {
+    generateCaptcha();
+  }, []);
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+
+    if (parseInt(userCaptcha) !== captchaNum1 + captchaNum2) {
+      setError("Verifikasi salah. Silakan coba lagi.");
+      generateCaptcha();
+      return;
+    }
 
     try {
       const res = await fetch("/api/admin/login", {
@@ -70,6 +91,23 @@ export function Login() {
                   className="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm bg-gray-50"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-bold text-gray-700">Verifikasi Anti-Robot</label>
+              <div className="mt-1 flex items-center space-x-3">
+                <span className="text-lg font-bold text-gray-800 bg-gray-100 px-4 py-2 rounded-xl border border-gray-200 whitespace-nowrap">
+                  {captchaNum1} + {captchaNum2} =
+                </span>
+                <input
+                  type="number"
+                  required
+                  className="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm bg-gray-50"
+                  value={userCaptcha}
+                  onChange={(e) => setUserCaptcha(e.target.value)}
+                  placeholder="Jawaban"
                 />
               </div>
             </div>

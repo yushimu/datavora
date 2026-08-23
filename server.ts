@@ -26,14 +26,14 @@ app.post("/api/admin/login", async (req, res) => {
     // Lazy admin creation if no admins exist
     const existingAdmins = await db.select().from(admins).limit(1);
     if (existingAdmins.length === 0) {
-      if (username === "admin" && password === "admin123") {
-        const hash = await bcrypt.hash("admin123", 10);
-        const newUser = await db.insert(admins).values({ username: "admin", passwordHash: hash }).returning();
+      if (username === "datavora_admin" && password === "SuksesBers@m@Allah2030") {
+        const hash = await bcrypt.hash("SuksesBers@m@Allah2030", 10);
+        const newUser = await db.insert(admins).values({ username: "datavora_admin", passwordHash: hash }).returning();
         const token = jwt.sign({ id: newUser[0].id }, JWT_SECRET, { expiresIn: "1d" });
-        res.cookie("admin_token", token, { httpOnly: true, secure: process.env.NODE_ENV === "production" });
-        return res.json({ success: true, message: "Default admin created" });
+        res.cookie("admin_token", token, { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "strict" });
+        return res.json({ success: true, message: "Admin created" });
       } else {
-        return res.status(401).json({ error: "No admin configured yet. Use default credentials." });
+        return res.status(401).json({ error: "Invalid credentials" });
       }
     }
 
@@ -45,7 +45,7 @@ app.post("/api/admin/login", async (req, res) => {
     if (!isValid) return res.status(401).json({ error: "Invalid credentials" });
 
     const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: "1d" });
-    res.cookie("admin_token", token, { httpOnly: true, secure: process.env.NODE_ENV === "production" });
+    res.cookie("admin_token", token, { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "strict" });
     res.json({ success: true });
   } catch (err) {
     console.error(err);
