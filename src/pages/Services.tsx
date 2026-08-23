@@ -272,12 +272,8 @@ export function Services() {
       <section className="w-full max-w-[1600px] mx-auto px-5 md:px-12 lg:px-20 py-24">
         <div className="flex flex-col lg:flex-row items-center gap-16">
           <div className="flex-1 w-full order-2 lg:order-1">
-            <div className="w-full aspect-square md:aspect-[4/3] bg-gray-50 rounded-[20px] border border-gray-200 shadow-sm relative overflow-hidden flex items-center justify-center p-8">
-              {/* Dashboard Illustration Placeholder */}
-              <div className="w-full h-full border-2 border-dashed border-gray-300 rounded-[16px] flex flex-col items-center justify-center bg-white/50 text-gray-400 gap-4">
-                <LineChart className="w-16 h-16 text-primary/40" />
-                <span className="font-medium text-lg">Premium Dashboard Framework</span>
-              </div>
+            <div className="w-full aspect-square md:aspect-[4/3] bg-gray-50 rounded-[20px] border border-gray-200 shadow-sm relative overflow-hidden flex items-center justify-center p-6 md:p-8">
+              <img src="/src/assets/images/dashboard_mockup_1787411722000.jpg" alt="Premium Dashboard Framework" className="w-full h-full object-cover rounded-[16px] shadow-lg shadow-black/5" />
             </div>
           </div>
           
