@@ -20,6 +20,16 @@ app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(cookieParser());
 
 // Auth API
+app.get("/api/admin/ping", (req, res) => {
+  res.json({
+    status: "ok",
+    db_url_exists: !!process.env.DATABASE_URL,
+    jwt_secret_exists: !!process.env.JWT_SECRET,
+    vercel_env: process.env.VERCEL,
+    node_env: process.env.NODE_ENV
+  });
+});
+
 app.post("/api/admin/login", async (req, res) => {
   const { username, password } = req.body;
   try {
