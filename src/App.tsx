@@ -21,6 +21,7 @@ import { PortfolioAdmin } from "./pages/admin/PortfolioAdmin";
 import { ServicesAdmin } from "./pages/admin/ServicesAdmin";
 import { ServiceGalleryAdmin } from "./pages/admin/ServiceGalleryAdmin";
 import { TestimonialsAdmin } from "./pages/admin/TestimonialsAdmin";
+import { SettingsAdmin } from "./pages/admin/SettingsAdmin";
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -46,6 +47,7 @@ function AnimatedRoutes() {
           <Route path="service-gallery" element={<ServiceGalleryAdmin />} />
           <Route path="portfolio" element={<PortfolioAdmin />} />
           <Route path="testimonials" element={<TestimonialsAdmin />} />
+          <Route path="settings" element={<SettingsAdmin />} />
         </Route>
       </Routes>
     </AnimatePresence>

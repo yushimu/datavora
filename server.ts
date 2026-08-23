@@ -3,7 +3,7 @@ import path from "path";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { db } from "./src/db/index.js";
-import { admins, products, portfolio, services, testimonials, serviceGallery } from "./src/db/schema.js";
+import { admins, products, portfolio, services, testimonials, serviceGallery, productCategories } from "./src/db/schema.js";
 import { eq } from "drizzle-orm";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -299,4 +299,32 @@ if (!process.env.VERCEL) {
 }
 
 // Export the app for Vercel serverless function
+// Category API
+app.get("/api/categories", async (req, res) => {
+  try {
+    const allCategories = await db.select().from(productCategories).orderBy(productCategories.name);
+    res.json(allCategories);
+  } catch (err) {
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+app.post("/api/categories", requireAuth, async (req, res) => {
+  try {
+    const newCategory = await db.insert(productCategories).values(req.body).returning();
+    res.json(newCategory[0]);
+  } catch (err) {
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+app.delete("/api/categories/:id", requireAuth, async (req, res) => {
+  try {
+    await db.delete(productCategories).where(eq(productCategories.id, parseInt(req.params.id as string)));
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 export default app;

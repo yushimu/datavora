@@ -50,3 +50,8 @@ export const serviceGallery = pgTable("service_gallery", {
   id: serial("id").primaryKey(),
   image: text("image").notNull(),
 });
+
+export const productCategories = pgTable("product_categories", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 255 }).notNull().unique(),
+});

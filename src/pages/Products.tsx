@@ -94,11 +94,20 @@ export function Products() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedPrice, setSelectedPrice] = useState("All Prices");
 
+  const [dbCategories, setDbCategories] = useState<{id: number; name: string}[]>([]);
+
   useEffect(() => {
     fetch("/api/products")
       .then((res) => res.json())
       .then((data) => {
         if (data.length > 0) setProducts(data);
+      })
+      .catch(console.error);
+      
+    fetch("/api/categories")
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data)) setDbCategories(data);
       })
       .catch(console.error);
   }, []);
@@ -126,7 +135,8 @@ export function Products() {
 
   const displayProducts = products.length > 0 ? products : defaultProducts;
 
-  const categories = ["All", "Dashboard", "Template", "Tracker", "Web App", "Data Model"];
+  const dynamicCategories = dbCategories.map(c => c.name);
+  const categories = ["All", ...(dynamicCategories.length > 0 ? dynamicCategories : ["Dashboard", "Template", "Tracker", "Web App", "Data Model"])];
   const priceRanges = ["All Prices", "Under $50", "$50 - $100", "Above $100"];
 
   const filteredProducts = displayProducts.filter(p => {

@@ -1,6 +1,6 @@
 import { Outlet, Navigate, Link, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { LayoutDashboard, Package, FolderGit2, LogOut, Briefcase, MessageSquare, Images } from "lucide-react";
+import { LayoutDashboard, Package, FolderGit2, LogOut, Briefcase, MessageSquare, Images, Settings } from "lucide-react";
 
 export function AdminLayout() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
@@ -81,6 +81,10 @@ export function AdminLayout() {
           <Link to="/admin/testimonials" className={navItemClass(location.pathname.includes("/admin/testimonials"))}>
             <MessageSquare className="w-5 h-5" />
             Testimonials
+          </Link>
+          <Link to="/admin/settings" className={navItemClass(location.pathname.includes("/admin/settings"))}>
+            <Settings className="w-5 h-5" />
+            Settings
           </Link>
         </nav>
         <button onClick={handleLogout} className="flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-white hover:bg-red-500/10 hover:text-red-400 rounded-xl transition-colors mt-auto w-full text-left font-medium">

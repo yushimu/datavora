@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import { motion } from "motion/react";
 import {
@@ -371,7 +372,7 @@ export function Portfolio() {
       </section>
 
       {/* SECTION 3 — PROJECT DETAIL MODAL */}
-      {selectedProject && (
+      {selectedProject && createPortal(
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-5 bg-black/60 backdrop-blur-sm opacity-100 transition-opacity">
           <div 
             className="absolute inset-0"
@@ -490,7 +491,8 @@ export function Portfolio() {
               </div>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

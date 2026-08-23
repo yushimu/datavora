@@ -4,6 +4,11 @@ const { Pool } = pg;
 import { pgTable, serial, varchar, text, jsonb } from "drizzle-orm/pg-core";
 import fs from "fs";
 
+const productCategories = pgTable("product_categories", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 255 }).notNull().unique(),
+});
+
 const products = pgTable("products", {
   id: serial("id").primaryKey(),
   title: varchar("title", { length: 255 }).notNull(),
@@ -92,6 +97,12 @@ async function run() {
       }
       console.log("Seeded portfolio");
     }
+    
+    const categoriesToSeed = ['Dashboard', 'Template', 'Tracker', 'Web App', 'Data Model'];
+    for (const cat of categoriesToSeed) {
+      await db.insert(productCategories).values({ name: cat }).onConflictDoNothing();
+    }
+    console.log("Seeded categories");
     
     console.log("Seeding complete!");
   } catch (err) {
