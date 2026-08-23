@@ -4,7 +4,9 @@ import { Plus, Pencil, Trash2, X } from "lucide-react";
 type Service = {
   id: number;
   title: string;
+  title_en?: string;
   description: string;
+  description_en?: string;
   icon: string;
 };
 
@@ -13,9 +15,11 @@ export function ServicesAdmin() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
   
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<Partial<Service>>({
     title: "",
+    title_en: "",
     description: "",
+    description_en: "",
     icon: "CheckCircle2"
   });
 
@@ -42,14 +46,16 @@ export function ServicesAdmin() {
     
     setIsModalOpen(false);
     setEditingId(null);
-    setFormData({ title: "", description: "", icon: "CheckCircle2" });
+    setFormData({ title: "", title_en: "", description: "", description_en: "", icon: "CheckCircle2" });
     fetchServices();
   };
 
   const handleEdit = (service: Service) => {
     setFormData({
       title: service.title,
+      title_en: service.title_en || "",
       description: service.description,
+      description_en: service.description_en || "",
       icon: service.icon
     });
     setEditingId(service.id);
@@ -73,7 +79,7 @@ export function ServicesAdmin() {
         <button 
           onClick={() => {
             setEditingId(null);
-            setFormData({ title: "", description: "", icon: "CheckCircle2" });
+            setFormData({ title: "", title_en: "", description: "", description_en: "", icon: "CheckCircle2" });
             setIsModalOpen(true);
           }}
           className="bg-primary hover:bg-primary-hover text-white px-6 py-3 rounded-xl flex items-center gap-2 font-bold shadow-lg shadow-primary/20 transition-all"
@@ -111,17 +117,29 @@ export function ServicesAdmin() {
             </div>
             
             <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2">Title</label>
-                <input required type="text" value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors" />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-2">Title (ID)</label>
+                  <input required type="text" value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black" />
+                </div>
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-2">Title (EN) - Optional</label>
+                  <input type="text" value={formData.title_en} onChange={e => setFormData({...formData, title_en: e.target.value})} className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black" />
+                </div>
               </div>
               <div>
                 <label className="block text-sm font-bold text-gray-700 mb-2">Icon Name (Lucide React)</label>
-                <input required type="text" value={formData.icon} onChange={e => setFormData({...formData, icon: e.target.value})} className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors" placeholder="e.g. CheckCircle2, LineChart" />
+                <input required type="text" value={formData.icon} onChange={e => setFormData({...formData, icon: e.target.value})} className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black" placeholder="e.g. CheckCircle2, LineChart" />
               </div>
-              <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2">Description</label>
-                <textarea required rows={4} value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"></textarea>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-2">Description (ID)</label>
+                  <textarea required rows={4} value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black"></textarea>
+                </div>
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-2">Description (EN) - Optional</label>
+                  <textarea rows={4} value={formData.description_en} onChange={e => setFormData({...formData, description_en: e.target.value})} className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black"></textarea>
+                </div>
               </div>
               <button type="submit" className="w-full bg-primary hover:bg-primary-hover text-white py-4 rounded-xl font-bold text-lg shadow-lg shadow-primary/20 transition-all">
                 Save Service

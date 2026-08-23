@@ -1,7 +1,12 @@
 import { Star, Quote } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useLanguage } from "../contexts/LanguageContext";
+import { en } from "../locales/en";
+import { id } from "../locales/id";
 
 export function Testimonials() {
+  const { language } = useLanguage();
+  const t = language === 'en' ? en : id;
   const [dbTestimonials, setDbTestimonials] = useState<any[]>([]);
 
   useEffect(() => {
@@ -70,7 +75,7 @@ export function Testimonials() {
         name: t.name,
         role: "Client", // Add default role since it's not in db yet, or we can just ignore it
         company: t.company,
-        content: t.review,
+        content: language === 'en' && t.review_en ? t.review_en : t.review,
         rating: t.rating,
         photo: t.photo
       }))
@@ -79,9 +84,9 @@ export function Testimonials() {
   return (
     <div className="w-full max-w-[1600px] mx-auto px-5 md:px-12 lg:px-20 py-12">
       <div className="text-center max-w-3xl mx-auto mb-20">
-        <h1 className="text-[30px] md:text-[36px] lg:text-[48px] font-bold text-zinc-900 mb-6">Client Testimonials</h1>
+        <h1 className="text-[30px] md:text-[36px] lg:text-[48px] font-bold text-zinc-900 mb-6">{t.testimonials.title}</h1>
         <p className="text-base lg:text-lg text-zinc-600">
-          Don't just take our word for it. Here's what professionals say about our digital products and custom services.
+          {t.testimonials.desc}
         </p>
       </div>
 

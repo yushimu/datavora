@@ -1,8 +1,14 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, FileSpreadsheet, Zap, Shield, TrendingUp, CheckCircle2 } from "lucide-react";
 import { motion } from "motion/react";
+import { useLanguage } from "../contexts/LanguageContext";
+import { en } from "../locales/en";
+import { id } from "../locales/id";
 
 export function Home() {
+  const { language } = useLanguage();
+  const t = language === 'en' ? en : id;
+  
   return (
     <div className="flex flex-col gap-12 md:gap-16 lg:gap-20 overflow-x-hidden">
       {/* Hero Section */}
@@ -10,27 +16,27 @@ export function Home() {
         <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20">
           <div className="text-center max-w-4xl mx-auto">
             <div className="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-bold uppercase tracking-widest mb-6 border border-primary/20">
-              Premium Digital Solutions
+              {t.home.premium}
             </div>
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-black mb-6 md:mb-8 leading-tight">
-              Empower Your Business with <br className="hidden md:block"/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-black to-primary">Data Solutions.</span>
+              {t.home.title1} <br className="hidden md:block"/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-black to-primary">{t.home.title2}</span>
             </h1>
             <p className="text-sm md:text-base lg:text-lg text-zinc-500 mb-8 md:mb-10 max-w-2xl mx-auto leading-relaxed px-4 md:px-0">
-              Transform raw information into actionable insights with our custom web apps, scalable databases, and intelligent templates.
+              {t.home.desc}
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 px-4 sm:px-0">
               <Link
                 to="/products"
                 className="w-full sm:w-auto px-6 md:px-8 min-h-[44px] py-3 bg-primary text-white rounded-xl md:rounded-2xl font-bold shadow-lg shadow-primary/20 hover:bg-[#059669] transition-all flex items-center justify-center gap-2 group text-sm md:text-base"
               >
-                Explore Products
+                {t.home.explore}
                 <ArrowRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
                 to="/services"
                 className="w-full sm:w-auto px-6 md:px-8 min-h-[44px] py-3 bg-white/50 backdrop-blur-md border border-gray-200 text-black rounded-xl md:rounded-2xl font-bold shadow-sm hover:bg-white transition-all flex items-center justify-center gap-2 text-sm md:text-base"
               >
-                Request Custom
+                {t.home.request}
               </Link>
             </div>
             
@@ -41,9 +47,9 @@ export function Home() {
               className="mt-12 md:mt-16 grid grid-cols-3 gap-4 md:gap-8 border-t border-gray-100 pt-8 md:pt-10"
             >
               {[
-                { label: "Templates", value: "50+" },
-                { label: "Projects", value: "120+" },
-                { label: "Satisfaction", value: "98%" }
+                { label: t.home.stats.templates, value: "50+" },
+                { label: t.home.stats.projects, value: "120+" },
+                { label: t.home.stats.satisfaction, value: "98%" }
               ].map((stat, idx) => (
                 <motion.div 
                   key={idx}
@@ -67,18 +73,18 @@ export function Home() {
           {[
             {
               icon: FileSpreadsheet,
-              title: "Bespoke Data Systems",
-              description: "Custom-architected databases, web applications, and analytics models that look beautiful and function flawlessly."
+              title: t.home.features.f1_title,
+              description: t.home.features.f1_desc
             },
             {
               icon: Zap,
-              title: "Automated Workflows",
-              description: "Eliminate manual data entry with smart macros and script-driven automation."
+              title: t.home.features.f2_title,
+              description: t.home.features.f2_desc
             },
             {
               icon: TrendingUp,
-              title: "Actionable Insights",
-              description: "Transform raw data into clear, visual dashboards that drive intelligent decision making."
+              title: t.home.features.f3_title,
+              description: t.home.features.f3_desc
             }
           ].map((feature, idx) => (
             <div key={idx} className="bg-white/40 backdrop-blur-md border border-gray-100 p-6 md:p-8 rounded-[24px] md:rounded-[32px] shadow-sm hover:shadow-md transition-shadow group relative overflow-hidden">
@@ -98,7 +104,7 @@ export function Home() {
         <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20 text-center relative z-10">
           <Shield className="w-10 h-10 md:w-12 md:h-12 text-primary mx-auto mb-6 md:mb-8" />
           <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-6 md:mb-8 leading-relaxed max-w-4xl mx-auto">
-            "Datavora transformed our chaotic data into a streamlined, beautiful system that saves us hours every week."
+            {t.home.testiMsg}
           </h2>
           <div className="flex items-center justify-center gap-3 md:gap-4">
             <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-white/10 border border-white/20"></div>
@@ -118,22 +124,22 @@ export function Home() {
           
           <div className="relative z-10">
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-black mb-4 md:mb-6">
-              Ready to elevate your workflow?
+              {t.home.readyTitle}
             </h2>
             <p className="text-sm md:text-base lg:text-lg text-zinc-500 mb-8 md:mb-10 max-w-2xl mx-auto">
-              Join thousands of professionals who trust Datavora for their digital tools and custom solutions.
+              {t.home.readyDesc}
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 to="/contact"
                 className="w-full sm:w-auto px-8 min-h-[44px] py-3 flex items-center justify-center bg-black text-white rounded-xl md:rounded-2xl font-bold text-sm md:text-lg hover:bg-zinc-800 transition-colors duration-300 shadow-lg"
               >
-                Let's Talk
+                {t.home.talkBtn}
               </Link>
             </div>
             
             <div className="mt-8 md:mt-12 flex items-center justify-center gap-4 md:gap-8 flex-wrap">
-              {['Fast Delivery', 'Premium Quality', 'Ongoing Support'].map((benefit) => (
+              {t.home.benefits.map((benefit) => (
                 <div key={benefit} className="flex items-center gap-1.5 md:gap-2 text-zinc-500 font-medium text-xs md:text-sm">
                   <CheckCircle2 className="w-3.5 h-3.5 md:w-4 md:h-4 text-primary" />
                   {benefit}

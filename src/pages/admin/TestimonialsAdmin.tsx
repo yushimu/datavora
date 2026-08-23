@@ -7,6 +7,7 @@ type Testimonial = {
   company: string;
   rating: number;
   review: string;
+  review_en?: string;
   photo: string;
 };
 
@@ -15,11 +16,12 @@ export function TestimonialsAdmin() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
   
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<Partial<Testimonial>>({
     name: "",
     company: "",
     rating: 5,
     review: "",
+    review_en: "",
     photo: ""
   });
 
@@ -46,7 +48,7 @@ export function TestimonialsAdmin() {
     
     setIsModalOpen(false);
     setEditingId(null);
-    setFormData({ name: "", company: "", rating: 5, review: "", photo: "" });
+    setFormData({ name: "", company: "", rating: 5, review: "", review_en: "", photo: "" });
     fetchTestimonials();
   };
 
@@ -56,6 +58,7 @@ export function TestimonialsAdmin() {
       company: testimonial.company,
       rating: testimonial.rating,
       review: testimonial.review,
+      review_en: testimonial.review_en || "",
       photo: testimonial.photo || ""
     });
     setEditingId(testimonial.id);
@@ -79,7 +82,7 @@ export function TestimonialsAdmin() {
         <button 
           onClick={() => {
             setEditingId(null);
-            setFormData({ name: "", company: "", rating: 5, review: "", photo: "" });
+            setFormData({ name: "", company: "", rating: 5, review: "", review_en: "", photo: "" });
             setIsModalOpen(true);
           }}
           className="bg-primary hover:bg-primary-hover text-white px-6 py-3 rounded-xl flex items-center gap-2 font-bold shadow-lg shadow-primary/20 transition-all"
@@ -145,9 +148,15 @@ export function TestimonialsAdmin() {
                   <input type="text" value={formData.photo} onChange={e => setFormData({...formData, photo: e.target.value})} className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors" />
                 </div>
               </div>
-              <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2">Review</label>
-                <textarea required rows={4} value={formData.review} onChange={e => setFormData({...formData, review: e.target.value})} className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"></textarea>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-2">Review (ID)</label>
+                  <textarea required rows={4} value={formData.review} onChange={e => setFormData({...formData, review: e.target.value})} className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black"></textarea>
+                </div>
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-2">Review (EN) - Optional</label>
+                  <textarea rows={4} value={formData.review_en} onChange={e => setFormData({...formData, review_en: e.target.value})} className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black"></textarea>
+                </div>
               </div>
               <button type="submit" className="w-full bg-primary hover:bg-primary-hover text-white py-4 rounded-xl font-bold text-lg shadow-lg shadow-primary/20 transition-all">
                 Save Testimonial

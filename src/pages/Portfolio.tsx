@@ -12,21 +12,33 @@ import {
 } from "lucide-react";
 
 import testimonialsData from "../data/testimonials.json";
+import { useLanguage } from "../contexts/LanguageContext";
+import { en } from "../locales/en";
+import { id } from "../locales/id";
 
 type PortfolioItem = {
   id: number;
   title: string;
+  title_en?: string;
   category: string;
+  category_en?: string;
   description: string;
+  description_en?: string;
   problem: string;
+  problem_en?: string;
   solution: string;
+  solution_en?: string;
   features: string[];
+  features_en?: string[];
   tools: string[];
   image: string;
   images?: string[];
 };
 
 export function Portfolio() {
+  const { language } = useLanguage();
+  const t = language === 'en' ? en : id;
+
   const [portfolioData, setPortfolioData] = useState<PortfolioItem[]>([]);
   const [selectedProject, setSelectedProject] = useState<PortfolioItem | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -175,7 +187,7 @@ export function Portfolio() {
                   )}
                   <div className="absolute top-2 left-2 sm:top-4 sm:left-4">
                     <span className="px-1.5 py-0.5 sm:px-3 sm:py-1 bg-white/90 backdrop-blur-sm text-black text-[9px] sm:text-xs font-bold rounded-full shadow-sm">
-                      {project.category}
+                      {language === 'en' && project.category_en ? project.category_en : project.category}
                     </span>
                   </div>
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/10 backdrop-blur-[2px]">
@@ -186,9 +198,9 @@ export function Portfolio() {
                 </div>
                 
                 <div className="p-3 sm:p-6 flex flex-col flex-1">
-                  <h3 className="text-sm sm:text-lg font-bold text-black mb-1 sm:mb-2 line-clamp-1">{project.title}</h3>
+                  <h3 className="text-sm sm:text-lg font-bold text-black mb-1 sm:mb-2 line-clamp-1">{language === 'en' && project.title_en ? project.title_en : project.title}</h3>
                   <p className="text-zinc-500 text-[10px] sm:text-xs md:text-sm mb-3 sm:mb-5 md:mb-6 line-clamp-2 leading-relaxed flex-1">
-                    {project.description}
+                    {language === 'en' && project.description_en ? project.description_en : project.description}
                   </p>
                   
                   <div className="flex flex-wrap gap-1 sm:gap-2 mb-3 sm:mb-5 md:mb-6">
@@ -400,10 +412,10 @@ export function Portfolio() {
                       <div className="w-full aspect-square bg-white shadow-xl rounded-2xl border border-gray-100 flex items-center justify-center p-6 text-center">
                         <div>
                           <div className="inline-block px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full mb-3">
-                            {selectedProject.category}
+                            {language === 'en' && selectedProject.category_en ? selectedProject.category_en : selectedProject.category}
                           </div>
                           <div className="text-xl font-bold text-black opacity-30">
-                            {selectedProject.title} Snapshot
+                            {language === 'en' && selectedProject.title_en ? selectedProject.title_en : selectedProject.title} Snapshot
                           </div>
                         </div>
                       </div>
@@ -414,37 +426,37 @@ export function Portfolio() {
             
             <div className="p-8 md:p-10 flex-1 flex flex-col">
               <span className="text-primary font-bold text-sm tracking-wider uppercase mb-2">
-                {selectedProject.category}
+                {language === 'en' && selectedProject.category_en ? selectedProject.category_en : selectedProject.category}
               </span>
               <h2 className="text-[24px] md:text-[28px] lg:text-[36px] font-bold text-black mb-6">
-                {selectedProject.title}
+                {language === 'en' && selectedProject.title_en ? selectedProject.title_en : selectedProject.title}
               </h2>
               
               <div className="space-y-8 flex-1">
                 <div>
                   <h3 className="text-lg font-bold text-black mb-2 flex items-center gap-2">
                     <span className="w-2 h-2 bg-red-400 rounded-full"></span>
-                    The Problem
+                    {t.portfolio.problem}
                   </h3>
                   <p className="text-zinc-600 leading-relaxed">
-                    {selectedProject.problem}
+                    {language === 'en' && selectedProject.problem_en ? selectedProject.problem_en : selectedProject.problem}
                   </p>
                 </div>
                 
                 <div>
                   <h3 className="text-lg font-bold text-black mb-2 flex items-center gap-2">
                     <span className="w-2 h-2 bg-primary rounded-full"></span>
-                    The Solution
+                    {t.portfolio.solution}
                   </h3>
                   <p className="text-zinc-600 leading-relaxed">
-                    {selectedProject.solution}
+                    {language === 'en' && selectedProject.solution_en ? selectedProject.solution_en : selectedProject.solution}
                   </p>
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-bold text-black mb-3">Key Features</h3>
+                  <h3 className="text-lg font-bold text-black mb-3">{t.portfolio.features}</h3>
                   <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {(selectedProject.features || []).map((feature, idx) => (
+                    {(language === 'en' && selectedProject.features_en && selectedProject.features_en.length > 0 ? selectedProject.features_en : (selectedProject.features || [])).map((feature, idx) => (
                       <li key={idx} className="flex items-start gap-2">
                         <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />
                         <span className="text-zinc-700 text-sm font-medium">{feature}</span>
@@ -455,7 +467,7 @@ export function Portfolio() {
               </div>
               
               <div className="pt-8 mt-8 border-t border-gray-100">
-                <div className="text-sm font-bold text-zinc-400 mb-3 uppercase tracking-wider">Tools Used</div>
+                <div className="text-sm font-bold text-zinc-400 mb-3 uppercase tracking-wider">{t.portfolio.tools}</div>
                 <div className="flex flex-wrap gap-2">
                   {(selectedProject.tools || []).map((tool, idx) => (
                     <span key={idx} className="px-3 py-1.5 bg-gray-100 text-black rounded-lg text-sm font-medium">

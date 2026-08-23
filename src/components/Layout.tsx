@@ -1,7 +1,10 @@
 import { ReactNode, useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Rocket } from "lucide-react";
+import { Menu, X, Rocket, Globe } from "lucide-react";
 import { cn } from "../lib/utils";
+import { useLanguage } from "../contexts/LanguageContext";
+import { en } from "../locales/en";
+import { id } from "../locales/id";
 
 export function Layout({ children }: { children: ReactNode }) {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -21,13 +24,16 @@ export function Layout({ children }: { children: ReactNode }) {
     setMobileMenuOpen(false);
   }, [location.pathname]);
 
+  const { language, setLanguage } = useLanguage();
+  const t = language === 'en' ? en : id;
+
   const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "Products", path: "/products" },
-    { name: "Services", path: "/services" },
-    { name: "Portfolio", path: "/portfolio" },
-    { name: "Testimonials", path: "/testimonials" },
-    { name: "Contact", path: "/contact" },
+    { name: t.nav.home, path: "/" },
+    { name: t.nav.products, path: "/products" },
+    { name: t.nav.services, path: "/services" },
+    { name: t.nav.portfolio, path: "/portfolio" },
+    { name: t.nav.testimonials, path: "/testimonials" },
+    { name: t.nav.contact, path: "/contact" },
   ];
 
   return (
@@ -70,8 +76,16 @@ export function Layout({ children }: { children: ReactNode }) {
                 to="/contact"
                 className="px-5 min-h-[44px] inline-flex items-center justify-center bg-black text-white rounded-full text-sm font-semibold hover:bg-zinc-800 transition-all"
               >
-                Get Started
+                {t.nav.getStarted}
               </Link>
+              <button
+                onClick={() => setLanguage(language === 'en' ? 'id' : 'en')}
+                className="flex items-center gap-2 px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-full text-sm font-bold transition-colors text-black ml-2"
+                aria-label="Toggle language"
+              >
+                <Globe className="w-4 h-4 text-primary" />
+                {language === 'en' ? 'EN' : 'ID'}
+              </button>
             </nav>
 
             {/* Mobile Nav Toggle */}
@@ -125,7 +139,7 @@ export function Layout({ children }: { children: ReactNode }) {
                 </span>
               </Link>
               <p className="text-zinc-400 max-w-sm mb-8 leading-relaxed">
-                Elevating your data with premium digital products and bespoke data solutions. We turn complexity into clarity.
+                {t.footer.desc}
               </p>
               <div className="flex gap-4">
                 {/* Social icons placeholders */}
@@ -142,7 +156,7 @@ export function Layout({ children }: { children: ReactNode }) {
             </div>
             
             <div>
-              <h4 className="font-semibold text-xs tracking-[0.2em] uppercase mb-6 text-white">Navigation</h4>
+              <h4 className="font-semibold text-xs tracking-[0.2em] uppercase mb-6 text-white">{t.footer.navTitle}</h4>
               <ul className="space-y-4">
                 {navLinks.map((link) => (
                   <li key={link.name}>
@@ -158,7 +172,7 @@ export function Layout({ children }: { children: ReactNode }) {
             </div>
             
             <div>
-              <h4 className="font-semibold text-xs tracking-[0.2em] uppercase mb-6 text-white">Contact</h4>
+              <h4 className="font-semibold text-xs tracking-[0.2em] uppercase mb-6 text-white">{t.footer.contactTitle}</h4>
               <ul className="space-y-4 text-white/50 text-sm">
                 <li>yunusshifa112@gmail.com</li>
                 <li>+62 857-2264-1239</li>
@@ -168,14 +182,14 @@ export function Layout({ children }: { children: ReactNode }) {
           </div>
           
           <div className="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 text-white/50 text-[10px] uppercase tracking-[0.2em]">
-            <p>&copy; {new Date().getFullYear()} DATAVORA SYSTEMS INC.</p>
+            <p>&copy; {new Date().getFullYear()} {t.footer.rights}</p>
             <div className="flex gap-6">
-              <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-primary transition-colors">Terms of Service</a>
+              <a href="#" className="hover:text-primary transition-colors">{t.footer.privacy}</a>
+              <a href="#" className="hover:text-primary transition-colors">{t.footer.terms}</a>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 bg-primary rounded-full"></div>
-              <span className="text-white font-bold">System Active</span>
+              <span className="text-white font-bold">{t.footer.status}</span>
             </div>
           </div>
         </div>

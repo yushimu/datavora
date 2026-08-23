@@ -2,8 +2,14 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import * as LucideIcons from "lucide-react";
 import { ChevronDown, ArrowRight, CheckCircle2, LineChart } from "lucide-react";
+import { useLanguage } from "../contexts/LanguageContext";
+import { en } from "../locales/en";
+import { id } from "../locales/id";
 
 export function Services() {
+  const { language } = useLanguage();
+  const t = language === 'en' ? en : id;
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -129,13 +135,13 @@ export function Services() {
         <div className="flex flex-col lg:flex-row items-center gap-10 md:gap-16">
           <div className="flex-1 w-full text-center lg:text-left">
             <div className="inline-block px-4 py-1.5 bg-primary/10 text-primary rounded-full text-xs font-bold uppercase tracking-widest mb-6">
-              Custom Data Solutions
+              {t.services.title}
             </div>
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-black mb-6 leading-tight">
               Need a Data Solution Built Just for Your Business?
             </h1>
             <p className="text-sm md:text-base lg:text-lg text-zinc-500 mb-8 md:mb-10 leading-relaxed max-w-xl mx-auto lg:mx-0 px-4 md:px-0">
-              We architect scalable databases, custom web applications, and intelligent dashboards to automate your workflows.
+              {t.services.desc}
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4 px-4 sm:px-0">
               <a
@@ -227,8 +233,8 @@ export function Services() {
               <div className="w-14 h-14 bg-primary/10 rounded-[16px] flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors duration-300">
                 {renderIcon(service.icon)}
               </div>
-              <h3 className="text-xl font-bold text-black mb-3">{service.title}</h3>
-              <p className="text-zinc-500 text-sm leading-relaxed">{service.description}</p>
+              <h3 className="text-xl font-bold text-black mb-3">{language === 'en' && service.title_en ? service.title_en : service.title}</h3>
+              <p className="text-zinc-500 text-sm leading-relaxed">{language === 'en' && service.description_en ? service.description_en : service.description}</p>
             </div>
           ))}
         </div>

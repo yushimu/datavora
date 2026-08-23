@@ -5,10 +5,13 @@ import { compressImage } from "../../lib/imageUtils";
 export type Product = {
   id: number;
   title: string;
+  title_en?: string;
   categories: string[];
   description: string;
+  description_en?: string;
   price: string;
   features: string[];
+  features_en?: string[];
   image: string;
   images: string[];
 };
@@ -118,15 +121,19 @@ export function ProductsAdmin() {
         </div>
         
         <div className="space-y-6">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">Title</label>
+              <label className="block text-sm font-bold text-gray-700 mb-2">Title (ID)</label>
               <input type="text" className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black" value={formData.title || ""} onChange={e => setFormData({...formData, title: e.target.value})} />
             </div>
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">Price</label>
-              <input type="text" className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black" value={formData.price || ""} onChange={e => setFormData({...formData, price: e.target.value})} />
+              <label className="block text-sm font-bold text-gray-700 mb-2">Title (EN) - Optional</label>
+              <input type="text" className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black" value={formData.title_en || ""} onChange={e => setFormData({...formData, title_en: e.target.value})} />
             </div>
+          </div>
+          <div>
+            <label className="block text-sm font-bold text-gray-700 mb-2">Price (Base Price in IDR)</label>
+            <input type="text" className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black" value={formData.price || ""} onChange={e => setFormData({...formData, price: e.target.value})} />
           </div>
           <div>
             <label className="block text-sm font-bold text-gray-700 mb-2">Categories</label>
@@ -190,18 +197,35 @@ export function ProductsAdmin() {
                )}
             </div>
           </div>
-          <div>
-            <label className="block text-sm font-bold text-gray-700 mb-2">Description</label>
-            <textarea rows={3} className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black" value={formData.description || ""} onChange={e => setFormData({...formData, description: e.target.value})} />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-2">Description (ID)</label>
+              <textarea rows={3} className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black" value={formData.description || ""} onChange={e => setFormData({...formData, description: e.target.value})} />
+            </div>
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-2">Description (EN) - Optional</label>
+              <textarea rows={3} className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black" value={formData.description_en || ""} onChange={e => setFormData({...formData, description_en: e.target.value})} />
+            </div>
           </div>
-          <div>
-            <label className="block text-sm font-bold text-gray-700 mb-2">Features (comma separated)</label>
-            <textarea 
-              rows={3}
-              className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black" 
-              value={formData.features?.join(", ") || ""} 
-              onChange={e => setFormData({...formData, features: e.target.value.split(",").map(s => s.trim()).filter(Boolean)})} 
-            />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-2">Features (ID - comma separated)</label>
+              <textarea 
+                rows={3}
+                className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black" 
+                value={formData.features?.join(", ") || ""} 
+                onChange={e => setFormData({...formData, features: e.target.value.split(",").map(s => s.trim()).filter(Boolean)})} 
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-2">Features (EN - comma separated)</label>
+              <textarea 
+                rows={3}
+                className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black" 
+                value={formData.features_en?.join(", ") || ""} 
+                onChange={e => setFormData({...formData, features_en: e.target.value.split(",").map(s => s.trim()).filter(Boolean)})} 
+              />
+            </div>
           </div>
           <button onClick={handleSave} className="w-full bg-primary text-white py-4 rounded-xl font-bold text-lg hover:bg-primary-hover shadow-lg shadow-primary/20 transition-all">Save Product</button>
         </div>

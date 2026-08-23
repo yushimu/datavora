@@ -5,11 +5,17 @@ import { compressImage } from "../../lib/imageUtils";
 type PortfolioItem = {
   id: number;
   title: string;
+  title_en?: string;
   category: string;
+  category_en?: string;
   description: string;
+  description_en?: string;
   problem: string;
+  problem_en?: string;
   solution: string;
+  solution_en?: string;
   features: string[];
+  features_en?: string[];
   tools: string[];
   image: string;
   images: string[];
@@ -101,14 +107,24 @@ export function PortfolioAdmin() {
         </div>
         
         <div className="space-y-6">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">Title</label>
+              <label className="block text-sm font-bold text-gray-700 mb-2">Title (ID)</label>
               <input type="text" className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black" value={formData.title || ""} onChange={e => setFormData({...formData, title: e.target.value})} />
             </div>
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">Category</label>
+              <label className="block text-sm font-bold text-gray-700 mb-2">Title (EN) - Optional</label>
+              <input type="text" className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black" value={formData.title_en || ""} onChange={e => setFormData({...formData, title_en: e.target.value})} />
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-2">Category (ID)</label>
               <input type="text" className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black" value={formData.category || ""} onChange={e => setFormData({...formData, category: e.target.value})} placeholder="e.g. Web App, Finance" />
+            </div>
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-2">Category (EN) - Optional</label>
+              <input type="text" className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black" value={formData.category_en || ""} onChange={e => setFormData({...formData, category_en: e.target.value})} placeholder="e.g. Web App, Finance" />
             </div>
           </div>
           <div>
@@ -147,25 +163,47 @@ export function PortfolioAdmin() {
                )}
             </div>
           </div>
-          <div>
-            <label className="block text-sm font-bold text-gray-700 mb-2">Description</label>
-            <textarea rows={2} className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black" value={formData.description || ""} onChange={e => setFormData({...formData, description: e.target.value})} />
-          </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">Problem</label>
+              <label className="block text-sm font-bold text-gray-700 mb-2">Description (ID)</label>
+              <textarea rows={2} className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black" value={formData.description || ""} onChange={e => setFormData({...formData, description: e.target.value})} />
+            </div>
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-2">Description (EN) - Optional</label>
+              <textarea rows={2} className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black" value={formData.description_en || ""} onChange={e => setFormData({...formData, description_en: e.target.value})} />
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-2">Problem (ID)</label>
               <textarea rows={3} className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black" value={formData.problem || ""} onChange={e => setFormData({...formData, problem: e.target.value})} />
             </div>
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">Solution</label>
-              <textarea rows={3} className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black" value={formData.solution || ""} onChange={e => setFormData({...formData, solution: e.target.value})} />
+              <label className="block text-sm font-bold text-gray-700 mb-2">Problem (EN) - Optional</label>
+              <textarea rows={3} className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black" value={formData.problem_en || ""} onChange={e => setFormData({...formData, problem_en: e.target.value})} />
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">Features (comma separated)</label>
+              <label className="block text-sm font-bold text-gray-700 mb-2">Solution (ID)</label>
+              <textarea rows={3} className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black" value={formData.solution || ""} onChange={e => setFormData({...formData, solution: e.target.value})} />
+            </div>
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-2">Solution (EN) - Optional</label>
+              <textarea rows={3} className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black" value={formData.solution_en || ""} onChange={e => setFormData({...formData, solution_en: e.target.value})} />
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-2">Features (ID - comma separated)</label>
               <input type="text" className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black" value={formData.features?.join(", ") || ""} onChange={e => setFormData({...formData, features: e.target.value.split(",").map(s => s.trim()).filter(Boolean)})} />
             </div>
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-2">Features (EN - comma separated)</label>
+              <input type="text" className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black" value={formData.features_en?.join(", ") || ""} onChange={e => setFormData({...formData, features_en: e.target.value.split(",").map(s => s.trim()).filter(Boolean)})} />
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-bold text-gray-700 mb-2">Tools (comma separated)</label>
               <input type="text" className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black" value={formData.tools?.join(", ") || ""} onChange={e => setFormData({...formData, tools: e.target.value.split(",").map(s => s.trim()).filter(Boolean)})} />

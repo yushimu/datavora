@@ -6,6 +6,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "motion/react";
+import { LanguageProvider } from "./contexts/LanguageContext";
 import { Layout } from "./components/Layout";
 import { Home } from "./pages/Home";
 import { Products } from "./pages/Products";
@@ -69,8 +70,10 @@ function PageWrapper({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   return (
-    <Router>
-      <AnimatedRoutes />
-    </Router>
+    <LanguageProvider>
+      <Router>
+        <AnimatedRoutes />
+      </Router>
+    </LanguageProvider>
   );
 }
