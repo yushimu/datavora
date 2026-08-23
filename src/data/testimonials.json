@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Sarah Jenkins",
+    "company": "Vertex Inc.",
+    "rating": 5,
+    "review": "Datavora transformed our chaotic data into a streamlined, beautiful system that saves us hours every week. Their custom spreadsheet was exactly what we needed to scale our processes without adding overhead.",
+    "photo": "SJ"
+  },
+  {
+    "name": "Marcus Thorne",
+    "company": "Lumina Partners",
+    "rating": 5,
+    "review": "The venture capital deal tracker is an absolute masterpiece. It's not just functional; it's aesthetically pleasing and incredibly intuitive. The team at Datavora understands both finance and design.",
+    "photo": "MT"
+  },
+  {
+    "name": "Elena Rodriguez",
+    "company": "Echo Marketing",
+    "rating": 5,
+    "review": "We purchased their Ultimate Financial Tracker and it blew us away. Clean layout, brilliant automation, and it perfectly handles our complex agency revenue streams.",
+    "photo": "ER"
+  },
+  {
+    "name": "David Chen",
+    "company": "Stratos E-Commerce",
+    "rating": 5,
+    "review": "Datavora's custom inventory solution paid for itself in the first month by catching stock discrepancies we were previously missing. Exceptional service and a beautiful end product.",
+    "photo": "DC"
+  },
+  {
+    "name": "Rachel Kim",
+    "company": "Nexus Tech",
+    "rating": 5,
+    "review": "I've worked with many consultants, but Datavora stands out for their ability to take a messy brief and deliver a polished, high-performance financial model. They are true spreadsheet architects.",
+    "photo": "RK"
+  }
+]

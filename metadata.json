@@ -1,0 +1,9 @@
+{
+  "name": "DATAVORA",
+  "description": "Premium digital products and custom spreadsheet services.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API",
+    "MAJOR_CAPABILITY_CLOUD_SQL"
+  ]
+}

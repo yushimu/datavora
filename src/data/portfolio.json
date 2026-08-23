@@ -1,0 +1,90 @@
+[
+  {
+    "id": 1,
+    "title": "Executive KPI Dashboard",
+    "category": "Dashboard",
+    "image": "/sample-dashboard.png",
+    "description": "High-level metrics and performance indicators consolidated into one clean view.",
+    "problem": "The executive team was spending 10+ hours a week manually aggregating data from multiple platforms into static presentations.",
+    "solution": "We developed an automated, real-time dashboard that integrates multiple data sources, presenting key metrics in an interactive and easily digestible format.",
+    "features": ["Real-time Data Sync", "Interactive Charts", "Custom Date Filters", "Automated PDF Reports"],
+    "tools": ["Google Sheets", "Apps Script", "Looker Studio"]
+  },
+  {
+    "id": 2,
+    "title": "Cash Flow Management",
+    "category": "Finance",
+    "image": "https://images.unsplash.com/photo-1579532537598-459ecdaf39cc?auto=format&fit=crop&w=800&q=80",
+    "description": "Automated cash flow forecasting and tracking system for medium enterprises.",
+    "problem": "Unpredictable cash flows were causing missed investment opportunities and frequent short-term borrowing.",
+    "solution": "Built a robust cash flow model with predictive algorithms based on historical payables and receivables.",
+    "features": ["Predictive Modeling", "Scenario Analysis", "Automated Bank Feed", "Variance Analysis"],
+    "tools": ["Excel", "Power Query", "VBA"]
+  },
+  {
+    "id": 3,
+    "title": "Inventory Control System",
+    "category": "Operations",
+    "image": "https://images.unsplash.com/photo-1586528116311-ad8ed745eb63?auto=format&fit=crop&w=800&q=80",
+    "description": "Comprehensive stock tracking with automated reorder alerts.",
+    "problem": "Frequent stockouts and overstocking were eating into profit margins across 3 warehouses.",
+    "solution": "Created a multi-location inventory tracker that automatically calculates reorder points and alerts purchasing managers.",
+    "features": ["Multi-location Support", "Barcode Scanner Ready", "Reorder Alerts", "COGS Analytics"],
+    "tools": ["Google Sheets", "Apps Script", "AppSheet"]
+  },
+  {
+    "id": 4,
+    "title": "HR Attendance Tracker",
+    "category": "Human Resources",
+    "image": "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&q=80",
+    "description": "Manage employee shifts, calculate overtime, and track leave balances automatically.",
+    "problem": "HR was manually calculating overtime and leave balances for 200+ employees, leading to payroll errors.",
+    "solution": "Deployed a centralized attendance system that automatically cross-references timesheets with company leave policies.",
+    "features": ["Overtime Calculator", "Leave Accrual Engine", "Payroll Export", "Employee Self-Service View"],
+    "tools": ["Excel", "Advanced Formulas", "VBA"]
+  },
+  {
+    "id": 5,
+    "title": "Sales Performance Dashboard",
+    "category": "Sales",
+    "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
+    "description": "Live leaderboard and quota tracking for distributed sales teams.",
+    "problem": "Sales reps lacked visibility into their progress against quotas until the end of the month.",
+    "solution": "Designed an engaging leaderboard dashboard that updates in real-time as deals are closed in the CRM.",
+    "features": ["Live Leaderboard", "Commission Calculator", "Pipeline Value Tracker", "Win/Loss Analytics"],
+    "tools": ["Google Sheets", "CRM API Integration"]
+  },
+  {
+    "id": 6,
+    "title": "School Grade Management",
+    "category": "Education",
+    "image": "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=800&q=80",
+    "description": "Automated grading rubric and report card generation for educational institutions.",
+    "problem": "Teachers spent weeks at the end of each term manually calculating weighted grades and writing report cards.",
+    "solution": "Built a comprehensive gradebook that automatically calculates term weights and generates printable PDF report cards.",
+    "features": ["Weighted Grade Calculator", "Automated Report Cards", "Class Averages", "Attendance Integration"],
+    "tools": ["Excel", "Mail Merge", "VBA"]
+  },
+  {
+    "id": 7,
+    "title": "CRM Lead Tracker",
+    "category": "Sales",
+    "image": "https://images.unsplash.com/photo-1552581234-26160f608093?auto=format&fit=crop&w=800&q=80",
+    "description": "Lightweight, customizable pipeline tracker to close deals and manage client data.",
+    "problem": "Small business couldn't afford expensive SaaS CRMs but was dropping leads using basic notepads.",
+    "solution": "Created a lightweight, highly customized spreadsheet CRM with follow-up reminders and status tagging.",
+    "features": ["Visual Pipeline", "Follow-up Reminders", "Conversion Tracking", "Lead Scoring"],
+    "tools": ["Google Sheets", "Conditional Formatting"]
+  },
+  {
+    "id": 8,
+    "title": "Google Sheets Automation",
+    "category": "Automation",
+    "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80",
+    "description": "Custom Apps Script to connect APIs, send automated emails, and run background tasks.",
+    "problem": "Manual data entry between an e-commerce storefront and the accounting software was causing massive delays.",
+    "solution": "Developed a custom Apps Script that bridges the two systems, automatically syncing daily transactions.",
+    "features": ["API Integration", "Automated Invoicing", "Nightly Sync Script", "Error Logging"],
+    "tools": ["Google Apps Script", "JSON Data Parsing"]
+  }
+]
