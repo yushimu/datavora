@@ -193,9 +193,9 @@ export function PortfolioAdmin() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {items.map(p => (
           <div key={p.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow overflow-hidden flex flex-col">
-            {p.image && (
+            {((p.images && p.images.length > 0) ? p.images[0] : p.image) && (
               <div className="w-full h-48 bg-gray-100 overflow-hidden">
-                <img src={p.image} alt={p.title} className="w-full h-full object-cover" />
+                <img src={(p.images && p.images.length > 0) ? p.images[0] : p.image} alt={p.title} className="w-full h-full object-cover" />
               </div>
             )}
             <div className="p-6 flex-1 flex flex-col">

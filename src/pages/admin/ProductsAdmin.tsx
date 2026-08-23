@@ -185,9 +185,9 @@ export function ProductsAdmin() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {products.map(p => (
           <div key={p.id} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex gap-6">
-            {p.image && (
+            {((p.images && p.images.length > 0) ? p.images[0] : p.image) && (
               <div className="w-32 h-32 shrink-0 rounded-xl overflow-hidden bg-gray-100">
-                <img src={p.image} alt={p.title} className="w-full h-full object-cover" />
+                <img src={(p.images && p.images.length > 0) ? p.images[0] : p.image} alt={p.title} className="w-full h-full object-cover" />
               </div>
             )}
             <div className="flex-1 flex flex-col justify-between">

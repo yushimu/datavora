@@ -1,3 +1,6 @@
+import * as dotenv from "dotenv";
+dotenv.config();
+
 import { db } from "./src/db/index.js";
 import { products, portfolio } from "./src/db/schema.js";
 import portfolioData from "./src/data/portfolio.json" assert { type: "json" };

@@ -92,7 +92,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
 export function Products() {
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const [selectedPrice, setSelectedPrice] = useState("Under $50");
+  const [selectedPrice, setSelectedPrice] = useState("All Prices");
 
   useEffect(() => {
     fetch("/api/products")
