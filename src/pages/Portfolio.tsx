@@ -402,19 +402,19 @@ export function Portfolio() {
             
             <button 
               onClick={() => setSelectedProject(null)}
-              className="absolute top-4 right-4 w-10 h-10 bg-white/80 hover:bg-white backdrop-blur rounded-full flex items-center justify-center shadow-md text-black transition-colors z-20"
+              className="absolute top-4 right-4 w-10 h-10 bg-white/80 hover:bg-gray-100 backdrop-blur border border-gray-200 rounded-full flex items-center justify-center shadow-sm text-black transition-colors z-20"
             >
               <X className="w-5 h-5" />
             </button>
 
             {/* Modal Image/Graphic Placeholder */}
-            <div className="w-full aspect-[4/3] sm:aspect-video bg-gray-100 relative overflow-hidden shrink-0 group/modalslider">
+            <div className="w-full aspect-[4/3] sm:aspect-video bg-white p-4 md:p-8 border-b border-gray-100 relative overflow-hidden shrink-0 group/modalslider">
                {(selectedProject.images && selectedProject.images.length > 0) || selectedProject.image ? (
                  <>
                    <img loading="lazy"
                      src={(selectedProject.images && selectedProject.images.length > 0) ? selectedProject.images[modalImageIdx] : selectedProject.image} 
                      alt={selectedProject.title} 
-                     className="w-full h-full object-cover object-top transition-opacity duration-300"
+                     className="w-full h-full object-contain object-center transition-opacity duration-300"
                    />
                    {selectedProject.images && selectedProject.images.length > 1 && (
                      <>
