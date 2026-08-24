@@ -32,6 +32,10 @@ export function PortfolioAdmin() {
     fetchItems();
   }, []);
 
+  const [featuresStr, setFeaturesStr] = useState("");
+  const [featuresEnStr, setFeaturesEnStr] = useState("");
+  const [toolsStr, setToolsStr] = useState("");
+
   const fetchItems = async () => {
     try {
       const res = await fetch("/api/portfolio");
@@ -43,25 +47,51 @@ export function PortfolioAdmin() {
   };
 
   const handleSave = async () => {
+    if (!formData.title || !formData.category || !formData.description || !formData.problem || !formData.solution) {
+      alert("Please fill in Title, Category, Description, Problem, and Solution.");
+      return;
+    }
+
     const method = isEditing ? "PUT" : "POST";
     const url = isEditing ? `/api/portfolio/${isEditing.id}` : "/api/portfolio";
     
+    // Remove id from payload if it exists, to prevent updating the serial primary key
+    const { id, ...dataToSave } = formData as PortfolioItem;
+    
+    // Parse array inputs from local strings
+    dataToSave.features = featuresStr.split(",").map(s => s.trim()).filter(Boolean);
+    dataToSave.features_en = featuresEnStr.split(",").map(s => s.trim()).filter(Boolean);
+    dataToSave.tools = toolsStr.split(",").map(s => s.trim()).filter(Boolean);
+
     // Set first image as the main image if exists and not already set
-    const dataToSave = { ...formData };
     if (dataToSave.images && dataToSave.images.length > 0 && !dataToSave.image) {
       dataToSave.image = dataToSave.images[0];
     }
     
-    await fetch(url, {
-      method,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(dataToSave),
-    });
+    try {
+      const response = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dataToSave),
+      });
 
-    setIsEditing(null);
-    setIsAdding(false);
-    setFormData({ features: [], tools: [], images: [] });
-    fetchItems();
+      if (!response.ok) {
+        const errData = await response.json();
+        alert(`Failed to save: ${errData.error || response.statusText}`);
+        return;
+      }
+
+      setIsEditing(null);
+      setIsAdding(false);
+      setFormData({ features: [], tools: [], images: [] });
+      setFeaturesStr("");
+      setFeaturesEnStr("");
+      setToolsStr("");
+      fetchItems();
+    } catch (err) {
+      console.error(err);
+      alert("Network error. Please try again.");
+    }
   };
 
   const handleDelete = async (id: number) => {
@@ -98,6 +128,22 @@ export function PortfolioAdmin() {
     }));
   };
 
+  const handleEdit = (p: PortfolioItem) => {
+    setFormData(p);
+    setFeaturesStr(p.features?.join(", ") || "");
+    setFeaturesEnStr(p.features_en?.join(", ") || "");
+    setToolsStr(p.tools?.join(", ") || "");
+    setIsEditing(p);
+  };
+
+  const handleAddNew = () => {
+    setFormData({ features: [], tools: [], image: "" });
+    setFeaturesStr("");
+    setFeaturesEnStr("");
+    setToolsStr("");
+    setIsAdding(true);
+  };
+
   return (
     <div className="w-full">
       <div className="flex justify-between items-center mb-8">
@@ -105,7 +151,7 @@ export function PortfolioAdmin() {
           <h1 className="text-3xl font-bold text-black mb-2">Portfolio Manager</h1>
           <p className="text-gray-500">Manage your past projects and case studies.</p>
         </div>
-        <button onClick={() => { setIsAdding(true); setFormData({ features: [], tools: [], image: "" }); }} className="bg-primary hover:bg-primary-hover text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 shadow-lg shadow-primary/20 transition-all">
+        <button onClick={handleAddNew} className="bg-primary hover:bg-primary-hover text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 shadow-lg shadow-primary/20 transition-all">
           <Plus className="w-5 h-5" /> Add Project
         </button>
       </div>
@@ -124,7 +170,7 @@ export function PortfolioAdmin() {
               <p className="text-gray-500 text-sm line-clamp-2 mb-4 flex-1">{p.description}</p>
               <div className="flex justify-end items-center mt-4 pt-4 border-t border-gray-50">
                 <div className="flex gap-2">
-                  <button onClick={() => { setIsEditing(p); setFormData(p); }} className="w-10 h-10 flex items-center justify-center text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-full transition-colors"><Edit2 className="w-4 h-4" /></button>
+                  <button onClick={() => handleEdit(p)} className="w-10 h-10 flex items-center justify-center text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-full transition-colors"><Edit2 className="w-4 h-4" /></button>
                   <button onClick={() => handleDelete(p.id)} className="w-10 h-10 flex items-center justify-center text-red-600 bg-red-50 hover:bg-red-100 rounded-full transition-colors"><Trash2 className="w-4 h-4" /></button>
                 </div>
               </div>
@@ -231,17 +277,17 @@ export function PortfolioAdmin() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-bold text-gray-700 mb-2">Features (ID - comma separated)</label>
-                  <input type="text" className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black" value={formData.features?.join(", ") || ""} onChange={e => setFormData({...formData, features: e.target.value.split(",").map(s => s.trim()).filter(Boolean)})} />
+                  <input type="text" className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black" value={featuresStr} onChange={e => setFeaturesStr(e.target.value)} />
                 </div>
                 <div>
                   <label className="block text-sm font-bold text-gray-700 mb-2">Features (EN - comma separated)</label>
-                  <input type="text" className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black" value={formData.features_en?.join(", ") || ""} onChange={e => setFormData({...formData, features_en: e.target.value.split(",").map(s => s.trim()).filter(Boolean)})} />
+                  <input type="text" className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black" value={featuresEnStr} onChange={e => setFeaturesEnStr(e.target.value)} />
                 </div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-bold text-gray-700 mb-2">Tools (comma separated)</label>
-                  <input type="text" className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black" value={formData.tools?.join(", ") || ""} onChange={e => setFormData({...formData, tools: e.target.value.split(",").map(s => s.trim()).filter(Boolean)})} />
+                  <input type="text" className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black" value={toolsStr} onChange={e => setToolsStr(e.target.value)} />
                 </div>
               </div>
               

@@ -30,6 +30,9 @@ export function ProductsAdmin() {
     fetchCategories();
   }, []);
 
+  const [featuresStr, setFeaturesStr] = useState("");
+  const [featuresEnStr, setFeaturesEnStr] = useState("");
+
   const fetchCategories = async () => {
     try {
       const res = await fetch("/api/categories");
@@ -47,34 +50,62 @@ export function ProductsAdmin() {
   };
 
   const handleSave = async () => {
+    if (!formData.title || !formData.description || !formData.price) {
+      alert("Please fill in Title, Description, and Price.");
+      return;
+    }
+
     const method = isEditing ? "PUT" : "POST";
     const url = isEditing ? `/api/products/${isEditing.id}` : "/api/products";
     
+    // Remove id from payload if it exists, to prevent updating the serial primary key
+    const { id, ...dataToSave } = formData as Product;
+    
+    // Parse features from local strings
+    dataToSave.features = featuresStr.split(",").map(s => s.trim()).filter(Boolean);
+    dataToSave.features_en = featuresEnStr.split(",").map(s => s.trim()).filter(Boolean);
+
     // Set first image as the main image if exists and not already set
-    const dataToSave = { ...formData };
     if (dataToSave.images && dataToSave.images.length > 0 && !dataToSave.image) {
       dataToSave.image = dataToSave.images[0];
     }
     
-    await fetch(url, {
-      method,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(dataToSave),
-    });
+    try {
+      const response = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dataToSave),
+      });
 
-    setIsEditing(null);
-    setIsAdding(false);
-    setFormData({ features: [], images: [], categories: [] });
-    fetchProducts();
+      if (!response.ok) {
+        const errData = await response.json();
+        alert(`Failed to save: ${errData.error || response.statusText}`);
+        return;
+      }
+
+      setIsEditing(null);
+      setIsAdding(false);
+      setFormData({ features: [], images: [], categories: [] });
+      setFeaturesStr("");
+      setFeaturesEnStr("");
+      fetchProducts();
+    } catch (err) {
+      console.error(err);
+      alert("Network error. Please try again.");
+    }
   };
 
   const handleEdit = (p: Product) => {
     setFormData({ ...p, categories: p.categories || [] });
+    setFeaturesStr(p.features?.join(", ") || "");
+    setFeaturesEnStr(p.features_en?.join(", ") || "");
     setIsEditing(p);
   };
 
   const handleAddNew = () => {
     setFormData({ features: [], images: [], categories: [] });
+    setFeaturesStr("");
+    setFeaturesEnStr("");
     setIsAdding(true);
   };
 
@@ -263,8 +294,8 @@ export function ProductsAdmin() {
                   <textarea 
                     rows={3}
                     className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black" 
-                    value={formData.features?.join(", ") || ""} 
-                    onChange={e => setFormData({...formData, features: e.target.value.split(",").map(s => s.trim()).filter(Boolean)})} 
+                    value={featuresStr} 
+                    onChange={e => setFeaturesStr(e.target.value)} 
                   />
                 </div>
                 <div>
@@ -272,8 +303,8 @@ export function ProductsAdmin() {
                   <textarea 
                     rows={3}
                     className="w-full border-gray-200 bg-gray-50 rounded-xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors text-black" 
-                    value={formData.features_en?.join(", ") || ""} 
-                    onChange={e => setFormData({...formData, features_en: e.target.value.split(",").map(s => s.trim()).filter(Boolean)})} 
+                    value={featuresEnStr} 
+                    onChange={e => setFeaturesEnStr(e.target.value)} 
                   />
                 </div>
               </div>

@@ -107,6 +107,7 @@ app.post("/api/products", requireAuth, async (req, res) => {
     const newProduct = await db.insert(products).values(req.body).returning();
     res.json(newProduct[0]);
   } catch (err) {
+    console.error("POST /api/products error:", err);
     res.status(500).json({ error: "Server error" });
   }
 });
@@ -116,6 +117,7 @@ app.put("/api/products/:id", requireAuth, async (req, res) => {
     const updated = await db.update(products).set(req.body).where(eq(products.id, parseInt(req.params.id as string))).returning();
     res.json(updated[0]);
   } catch (err) {
+    console.error("PUT /api/products error:", err);
     res.status(500).json({ error: "Server error" });
   }
 });

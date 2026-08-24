@@ -40,16 +40,30 @@ export function TestimonialsAdmin() {
     const url = editingId ? `/api/testimonials/${editingId}` : "/api/testimonials";
     const method = editingId ? "PUT" : "POST";
     
-    await fetch(url, {
-      method,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData)
-    });
-    
-    setIsModalOpen(false);
-    setEditingId(null);
-    setFormData({ name: "", company: "", rating: 5, review: "", review_en: "", photo: "" });
-    fetchTestimonials();
+    // Remove id from payload if it exists
+    const { id, ...dataToSave } = formData as Testimonial;
+
+    try {
+      const response = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dataToSave)
+      });
+      
+      if (!response.ok) {
+        const errData = await response.json();
+        alert(`Failed to save: ${errData.error || response.statusText}`);
+        return;
+      }
+      
+      setIsModalOpen(false);
+      setEditingId(null);
+      setFormData({ name: "", company: "", rating: 5, review: "", review_en: "", photo: "" });
+      fetchTestimonials();
+    } catch (err) {
+      console.error(err);
+      alert("Network error. Please try again.");
+    }
   };
 
   const handleEdit = (testimonial: Testimonial) => {

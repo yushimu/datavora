@@ -38,16 +38,30 @@ export function ServicesAdmin() {
     const url = editingId ? `/api/services/${editingId}` : "/api/services";
     const method = editingId ? "PUT" : "POST";
     
-    await fetch(url, {
-      method,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData)
-    });
-    
-    setIsModalOpen(false);
-    setEditingId(null);
-    setFormData({ title: "", title_en: "", description: "", description_en: "", icon: "CheckCircle2" });
-    fetchServices();
+    // Remove id from payload if it exists
+    const { id, ...dataToSave } = formData as Service;
+
+    try {
+      const response = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dataToSave)
+      });
+      
+      if (!response.ok) {
+        const errData = await response.json();
+        alert(`Failed to save: ${errData.error || response.statusText}`);
+        return;
+      }
+      
+      setIsModalOpen(false);
+      setEditingId(null);
+      setFormData({ title: "", title_en: "", description: "", description_en: "", icon: "CheckCircle2" });
+      fetchServices();
+    } catch (err) {
+      console.error(err);
+      alert("Network error. Please try again.");
+    }
   };
 
   const handleEdit = (service: Service) => {
