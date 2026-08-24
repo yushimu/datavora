@@ -107,8 +107,8 @@ export function Products() {
   const t = language === 'en' ? en : id;
 
   const [products, setProducts] = useState<Product[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState(t.products.allCats);
-  const [selectedPrice, setSelectedPrice] = useState(t.products.allPrices);
+  const [selectedCategory, setSelectedCategory] = useState("ALL");
+  const [selectedPrice, setSelectedPrice] = useState("ALL_PRICES");
 
   const [dbCategories, setDbCategories] = useState<{id: number; name: string}[]>([]);
 
@@ -146,25 +146,25 @@ export function Products() {
       description: "Keep your team aligned with this advanced project tracking system. Includes Gantt charts, resource allocation, and client portals.",
       price: "$79",
       image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
-      features: ["Interactive Gantt charts", "Team capacity planning", "Automated status reports", "Client-facing views"]
+      features: ["Interactive Gantt charts", "Team capacity planning", "Automated status reports", "Client-facing views"],
+      images: []
     }
   ];
 
   const displayProducts = products.length > 0 ? products : defaultProducts;
 
   const dynamicCategories = dbCategories.map(c => c.name);
-  const categories = [t.products.allCats, ...(dynamicCategories.length > 0 ? dynamicCategories : ["Dashboard", "Template", "Tracker", "Web App", "Data Model"])];
-  const priceRanges = [t.products.allPrices, t.products.under50, t.products.between50_100, t.products.above100];
+  const categories = ["ALL", ...(dynamicCategories.length > 0 ? dynamicCategories : ["Dashboard", "Template", "Tracker", "Web App", "Data Model"])];
 
   const filteredProducts = displayProducts.filter(p => {
-    const catMatch = selectedCategory === t.products.allCats || (p.categories && p.categories.includes(selectedCategory));
+    const catMatch = selectedCategory === "ALL" || (p.categories && p.categories.includes(selectedCategory));
     
     let priceMatch = true;
     const numPrice = parseFloat(p.price.replace(/[^0-9.]/g, ''));
-    if (!isNaN(numPrice) && selectedPrice !== t.products.allPrices) {
-      if (selectedPrice === t.products.under50) priceMatch = numPrice < 50;
-      else if (selectedPrice === t.products.between50_100) priceMatch = numPrice >= 50 && numPrice <= 100;
-      else if (selectedPrice === t.products.above100) priceMatch = numPrice > 100;
+    if (!isNaN(numPrice) && selectedPrice !== "ALL_PRICES") {
+      if (selectedPrice === "UNDER_50") priceMatch = numPrice < 50;
+      else if (selectedPrice === "BETWEEN_50_100") priceMatch = numPrice >= 50 && numPrice <= 100;
+      else if (selectedPrice === "ABOVE_100") priceMatch = numPrice > 100;
     }
     
     return catMatch && priceMatch;
@@ -191,7 +191,7 @@ export function Products() {
                   : "text-zinc-500 hover:text-black hover:bg-white/50"
               }`}
             >
-              {cat}
+              {cat === "ALL" ? t.products.allCats : cat}
             </button>
           ))}
         </div>
@@ -202,9 +202,10 @@ export function Products() {
             value={selectedPrice}
             onChange={(e) => setSelectedPrice(e.target.value)}
           >
-            {priceRanges.map(range => (
-              <option key={range} value={range}>{range}</option>
-            ))}
+            <option value="ALL_PRICES">{t.products.allPrices}</option>
+            <option value="UNDER_50">{t.products.under50}</option>
+            <option value="BETWEEN_50_100">{t.products.between50_100}</option>
+            <option value="ABOVE_100">{t.products.above100}</option>
           </select>
         </div>
       </div>

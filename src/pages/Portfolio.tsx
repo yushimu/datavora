@@ -104,6 +104,16 @@ export function Portfolio() {
     return () => { document.body.style.overflow = "unset"; };
   }, [selectedProject]);
 
+  const [selectedCategory, setSelectedCategory] = useState("ALL");
+
+  const dynamicCategories = Array.from(new Set(portfolioData.map(p => p.category))).filter(Boolean);
+  const categories = ["ALL", ...(dynamicCategories.length > 0 ? dynamicCategories : ["Web App", "Dashboard", "Automation"])];
+
+  const filteredPortfolio = portfolioData.filter(p => {
+    if (selectedCategory === "ALL") return true;
+    return p.category === selectedCategory;
+  });
+
   return (
     <div className="w-full bg-white text-black font-sans relative">
       
@@ -162,7 +172,7 @@ export function Portfolio() {
       {/* SECTION 2 — FEATURED PORTFOLIO */}
       <section id="projects" className="bg-gray-50 py-16 md:py-24 border-y border-gray-100">
         <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 md:px-12 lg:px-20">
-          <div className="text-center max-w-2xl mx-auto mb-10 md:mb-16">
+          <div className="text-center max-w-2xl mx-auto mb-10 md:mb-12">
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-black mb-3 md:mb-4">
               {t.portfolio.featuredTitle}
             </h2>
@@ -171,8 +181,30 @@ export function Portfolio() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
-            {portfolioData.map((project) => (
+          <div className="flex overflow-x-auto hide-scrollbar w-full p-2 gap-1 mb-8 bg-gray-100/50 rounded-2xl md:rounded-[20px] shadow-sm border border-gray-100 justify-start lg:justify-center">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                className={`whitespace-nowrap px-4 py-2.5 rounded-xl text-sm font-bold transition-all ${
+                  selectedCategory === cat
+                    ? "bg-white text-black shadow-sm ring-1 ring-gray-200"
+                    : "text-zinc-500 hover:text-black hover:bg-white/50"
+                }`}
+              >
+                {cat === "ALL" ? t.portfolio.allCats : cat}
+              </button>
+            ))}
+          </div>
+
+          {filteredPortfolio.length === 0 ? (
+            <div className="text-center py-20 bg-white rounded-3xl border border-dashed border-gray-200">
+              <h3 className="text-xl font-bold text-zinc-400 mb-2">{t.portfolio.noItems}</h3>
+              <p className="text-zinc-500">{t.portfolio.tryAdjusting}</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
+              {filteredPortfolio.map((project) => (
               <div 
                 key={project.id} 
                 className="group bg-white rounded-2xl sm:rounded-[24px] border border-gray-100 overflow-hidden shadow-sm hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] hover:-translate-y-2 transition-all duration-500 flex flex-col"
@@ -225,7 +257,8 @@ export function Portfolio() {
                 </div>
               </div>
             ))}
-          </div>
+            </div>
+          )}
         </div>
       </section>
 

@@ -88,18 +88,29 @@ export function Layout({ children }: { children: ReactNode }) {
               </button>
             </nav>
 
-            {/* Mobile Nav Toggle */}
-            <button
-              className="md:hidden min-h-[44px] min-w-[44px] flex items-center justify-center text-zinc-600 hover:text-zinc-900"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label="Toggle menu"
-            >
-              {mobileMenuOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
-            </button>
+            {/* Mobile Actions (Language & Menu Toggle) */}
+            <div className="flex md:hidden items-center gap-2">
+              <button
+                onClick={() => setLanguage(language === 'en' ? 'id' : 'en')}
+                className="flex items-center gap-2 px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-full text-xs font-bold transition-colors text-black"
+                aria-label="Toggle language"
+              >
+                <Globe className="w-4 h-4 text-primary" />
+                {language === 'en' ? 'EN' : 'ID'}
+              </button>
+              
+              <button
+                className="min-h-[40px] min-w-[40px] flex items-center justify-center text-zinc-600 hover:text-zinc-900 bg-gray-50 hover:bg-gray-100 rounded-full transition-colors"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                aria-label="Toggle menu"
+              >
+                {mobileMenuOpen ? (
+                  <X className="w-5 h-5" />
+                ) : (
+                  <Menu className="w-5 h-5" />
+                )}
+              </button>
+            </div>
           </div>
         </div>
 
