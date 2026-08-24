@@ -90,17 +90,44 @@ export function ServicesAdmin() {
           <h1 className="text-3xl font-bold text-black mb-2">Services Manager</h1>
           <p className="text-gray-500">Manage your business services and offerings.</p>
         </div>
-        <button 
-          onClick={() => {
-            setEditingId(null);
-            setFormData({ title: "", title_en: "", description: "", description_en: "", icon: "CheckCircle2" });
-            setIsModalOpen(true);
-          }}
-          className="bg-primary hover:bg-primary-hover text-white px-6 py-3 rounded-xl flex items-center gap-2 font-bold shadow-lg shadow-primary/20 transition-all"
-        >
-          <Plus className="w-5 h-5" />
-          Add Service
-        </button>
+        <div className="flex gap-4">
+          {services.length === 0 && (
+            <button 
+              onClick={async () => {
+                const defaultServices = [
+                  { icon: "LineChart", title: "Financial Dashboard", description: "Automated P&L, cash flow forecasting, and budget tracking with visual charts." },
+                  { icon: "Package", title: "Inventory Management", description: "Track stock levels, set reorder points, and analyze COGS across multiple locations." },
+                  { icon: "Users", title: "HR Attendance", description: "Manage employee shifts, calculate overtime, and track leave balances automatically." },
+                  { icon: "Briefcase", title: "Sales CRM", description: "Lightweight, customizable pipeline tracker to close deals and manage client data." },
+                  { icon: "LayoutDashboard", title: "KPI Executive Dashboard", description: "High-level metrics and performance indicators consolidated into one clean view." },
+                  { icon: "Code", title: "Google Sheets Automation", description: "Custom Apps Script to connect APIs, send automated emails, and run background tasks." }
+                ];
+                for (const s of defaultServices) {
+                  await fetch("/api/services", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(s)
+                  });
+                }
+                fetchServices();
+              }}
+              className="bg-zinc-800 hover:bg-zinc-900 text-white px-6 py-3 rounded-xl flex items-center gap-2 font-bold transition-all"
+            >
+              Seed Defaults
+            </button>
+          )}
+          <button 
+            onClick={() => {
+              setEditingId(null);
+              setFormData({ title: "", title_en: "", description: "", description_en: "", icon: "CheckCircle2" });
+              setIsModalOpen(true);
+            }}
+            className="bg-primary hover:bg-primary-hover text-white px-6 py-3 rounded-xl flex items-center gap-2 font-bold shadow-lg shadow-primary/20 transition-all"
+          >
+            <Plus className="w-5 h-5" />
+            Add Service
+          </button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
